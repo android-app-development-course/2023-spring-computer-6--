@@ -5,7 +5,9 @@
     tools:ignore="MissingDefaultResource">
 
 
-    <alpha android:fromAlpha="1"
+
+
+    <alpha android:fromAlpha="1.0"
         android:toAlpha="0.3"/>
 
 </set>
