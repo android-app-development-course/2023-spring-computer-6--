@@ -1,7 +1,10 @@
 package com.example.teamup
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var islogin = true   // 是否已经登录
     private var isNavView: Boolean = true   // 是否为Nav底边栏
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         // 开始登录
 //        if(!islogin){
@@ -82,6 +86,8 @@ class MainActivity : AppCompatActivity() {
                 menuItem.isChecked = true
             }
         })
+
+
 
 
     }

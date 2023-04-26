@@ -36,9 +36,6 @@ class MeFragment : Fragment() {
 //            textView.text =it
 //        }
 
-        binding.bgMe.setOnClickListener{
-            Toast.makeText(MainActivity(),"12132",Toast.LENGTH_SHORT).show()
-        }
 
 
 
@@ -46,6 +43,7 @@ class MeFragment : Fragment() {
 
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
