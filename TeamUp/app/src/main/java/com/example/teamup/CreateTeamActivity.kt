@@ -17,7 +17,7 @@ class CreateTeamActivity : AppCompatActivity() {
     private lateinit var mCardView: CardView
     private lateinit var mTextView: TextView
     private var HasCreated: Boolean = false
-    @SuppressLint("CutPasteId")
+    @SuppressLint("CutPasteId", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_team)
@@ -25,6 +25,15 @@ class CreateTeamActivity : AppCompatActivity() {
         var create_a_team = findViewById<TextView>(R.id.create_a_team)
         var face= Typeface.createFromAsset(assets,"Bodo Amat.ttf")
         create_a_team.setTypeface(face)
+
+        var back_bt2= findViewById<TextView>(R.id.back_bt2)
+        face= Typeface.createFromAsset(assets,"Lemon Days.ttf")
+        back_bt2.setTypeface(face)
+
+        back_bt2.setOnClickListener {
+            onBackPressed()
+        }
+
 
 
         supportActionBar?.hide() // 隐藏顶部栏
@@ -40,7 +49,7 @@ class CreateTeamActivity : AppCompatActivity() {
 
         // 创建平移动画并设置监听器
         val anim = TranslateAnimation(0f, 0f, -250f, 0f)
-        anim.duration = 1000
+        anim.duration = 800
         anim.interpolator = DecelerateInterpolator()
         anim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
@@ -59,9 +68,23 @@ class CreateTeamActivity : AppCompatActivity() {
             override fun onAnimationRepeat(animation: Animation?) {}
         })
 
+        // 创建平移动画并设置监听器
+        val anim2 = TranslateAnimation(0f, 0f, 200f, 0f)
+        anim2.duration = 600
+        anim2.startOffset=1100
+        anim2.interpolator = DecelerateInterpolator()
+        anim2.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {}
+            override fun onAnimationRepeat(animation: Animation?) {}
+        })
+
         // 开始动画
         mTextView.startAnimation(anim)
         mCardView.startAnimation(anim1)
+        back_bt2.startAnimation(anim2)
+
+
 
 
     }

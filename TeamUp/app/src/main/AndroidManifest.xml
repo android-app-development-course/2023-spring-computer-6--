@@ -35,6 +35,7 @@
             android:name=".ui.DialogFragment"
             android:exported="true" />
         <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:name=".CreateTeamActivity"
             android:exported="true" />
         <activity
