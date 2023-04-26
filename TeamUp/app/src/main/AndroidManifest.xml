@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/teamup_logo_foreground"
+        android:icon="@mipmap/teamup_logo"
         android:label="@string/app_name"
         android:minSdkVersion="21"
         android:supportsRtl="true"

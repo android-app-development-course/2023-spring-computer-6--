@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             val passwordEditText = findViewById<EditText>(R.id.password)
 
             // (暂时) 直接登录成功，不进行判断
-            if(true) {
+            if(false) {
                 val resultAccount = accountEditText.text.toString()
                 val resultPassword = passwordEditText.text.toString()
                 val intent = Intent(this,MainActivity::class.java).apply {
@@ -82,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.preview).setOnClickListener{
             val intent= Intent(this,MainActivity::class.java) //用于跳转
             startActivity(intent)
+            overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
             finish()
         }
 
@@ -95,8 +96,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        // Do nothing
-    }
+//    override fun onBackPressed() {
+//        // Do nothing
+//    }
 
 }

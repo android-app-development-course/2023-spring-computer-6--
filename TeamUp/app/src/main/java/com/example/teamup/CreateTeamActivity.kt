@@ -1,6 +1,8 @@
 package com.example.teamup
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
@@ -15,9 +17,16 @@ class CreateTeamActivity : AppCompatActivity() {
     private lateinit var mCardView: CardView
     private lateinit var mTextView: TextView
     private var HasCreated: Boolean = false
+    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_team)
+
+        var create_a_team = findViewById<TextView>(R.id.create_a_team)
+        var face= Typeface.createFromAsset(assets,"Bodo Amat.ttf")
+        create_a_team.setTypeface(face)
+
+
         supportActionBar?.hide() // 隐藏顶部栏
 
         mCardView = findViewById(R.id.card_view)
@@ -30,7 +39,7 @@ class CreateTeamActivity : AppCompatActivity() {
         val translationY = 4000
 
         // 创建平移动画并设置监听器
-        val anim = TranslateAnimation(0f, 0f, translationY.toFloat(), 0f)
+        val anim = TranslateAnimation(0f, 0f, -250f, 0f)
         anim.duration = 1000
         anim.interpolator = DecelerateInterpolator()
         anim.setAnimationListener(object : Animation.AnimationListener {

@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide() // 隐藏顶部栏
-        overridePendingTransition(0,0) // （暂时）取消系统自带动画
 
 
 //       btnNewActivity 新建 添加监听事件
@@ -51,34 +50,40 @@ class MainActivity : AppCompatActivity() {
         adapter = MyPagerAdapter(this)
         viewPager.adapter = adapter
 
+        //设置初始页面为 首页
+        viewPager.setCurrentItem(1,false)
+
+
+
 //      底部导航栏 nav
-            var bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
-            bottomNavigationView.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.navigation_team -> {
-                        viewPager.currentItem = 0
-                        return@setOnItemSelectedListener true
-                    }
-                    R.id.navigation_home -> {
-                        viewPager.currentItem = 1
-                        return@setOnItemSelectedListener true
-                    }
-                    R.id.navigation_me -> {
-                        viewPager.currentItem = 2
-                        return@setOnItemSelectedListener true
-                    }
-                    else -> return@setOnItemSelectedListener false
+        var bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView.selectedItemId=R.id.navigation_home //初始底部栏为首页
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_team -> {
+                    viewPager.currentItem = 0
+                    return@setOnItemSelectedListener true
                 }
+                R.id.navigation_home -> {
+                    viewPager.currentItem = 1
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_me -> {
+                    viewPager.currentItem = 2
+                    return@setOnItemSelectedListener true
+                }
+                else -> return@setOnItemSelectedListener false
             }
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    val menuItem = bottomNavigationView.menu.getItem(position)
-                    menuItem.isChecked = true
-                }
-            })
-//      设置初始页面为 首页
-        viewPager.currentItem = 1
+        }
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val menuItem = bottomNavigationView.menu.getItem(position)
+                menuItem.isChecked = true
+            }
+        })
+
+
     }
 
     private class MyPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
