@@ -40,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="80dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="20dp"
 
             android:background="@drawable/meinfo_bgbox"
 
@@ -83,7 +84,7 @@
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
             android:text="账号"
             android:textSize="28sp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="50dp"
 
             />
@@ -94,15 +95,16 @@
             app:layout_constraintEnd_toStartOf="@id/userinfo_account_t"
             app:layout_constraintTop_toBottomOf="@id/round_image"
             android:layout_marginTop="41dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginRight="-10dp"
             android:src="@drawable/arrow_right"
             />
 
 
         <TextView
             android:id="@+id/userinfo_account_c"
-            android:layout_width="200dp"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="-10dp"
             app:layout_constraintStart_toEndOf="@id/userinfo_account_t"
             app:layout_constraintTop_toBottomOf="@id/round_image"
             android:text=""
@@ -137,7 +139,7 @@
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
             android:text="学校"
             android:textSize="28sp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="30dp"
 
             />
@@ -148,20 +150,20 @@
             app:layout_constraintEnd_toStartOf="@id/userinfo_school_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_account_t"
             android:layout_marginTop="21dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginRight="-10dp"
             android:src="@drawable/arrow_right"
             />
 
 
         <TextView
             android:id="@+id/userinfo_school_c"
-            android:layout_width="200dp"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/userinfo_school_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_account_t"
             android:text=""
             android:textSize="28sp"
-
+            android:layout_marginLeft="-10dp"
             android:layout_marginTop="30dp"
 
             />
@@ -190,7 +192,7 @@
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
             android:text="专业"
             android:textSize="28sp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="30dp"
 
             />
@@ -201,20 +203,20 @@
             app:layout_constraintEnd_toStartOf="@id/userinfo_major_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_school_t"
             android:layout_marginTop="21dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginRight="-10dp"
             android:src="@drawable/arrow_right"
             />
 
 
         <TextView
             android:id="@+id/userinfo_major_c"
-            android:layout_width="200dp"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/userinfo_major_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_school_t"
             android:text=""
             android:textSize="28sp"
-
+            android:layout_marginLeft="-10dp"
             android:layout_marginTop="30dp"
 
             />
@@ -245,7 +247,7 @@
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
             android:text="性别"
             android:textSize="28sp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="30dp"
 
             />
@@ -256,20 +258,20 @@
             app:layout_constraintEnd_toStartOf="@id/userinfo_gender_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_major_t"
             android:layout_marginTop="21dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginRight="-10dp"
             android:src="@drawable/arrow_right"
             />
 
 
         <TextView
             android:id="@+id/userinfo_gender_c"
-            android:layout_width="200dp"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/userinfo_gender_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_major_t"
             android:text=""
             android:textSize="28sp"
-
+            android:layout_marginLeft="-10dp"
             android:layout_marginTop="30dp"
 
             />
@@ -295,7 +297,7 @@
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
             android:text="简介"
             android:textSize="28sp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="30dp"
             />
         <ImageView
@@ -304,14 +306,14 @@
             app:layout_constraintEnd_toStartOf="@id/userinfo_resume_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_gender_t"
             android:layout_marginTop="21dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginRight="-10dp"
             android:src="@drawable/arrow_right"
             />
 
 
         <TextView
             android:id="@+id/userinfo_resume_c"
-            android:layout_width="210dp"
+            android:layout_width="205dp"
             android:layout_height="100dp"
             app:layout_constraintStart_toEndOf="@id/userinfo_gender_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_gender_t"
@@ -319,7 +321,7 @@
             android:textSize="26sp"
             android:background="@drawable/resume_box"
             android:layout_marginLeft="-10dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="30dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="1dp"
