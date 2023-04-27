@@ -1,44 +1,31 @@
-package com.example.teamup.ui.home
+package com.example.teamup.ui.team
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teamup.R
 import com.example.teamup.adapter.TeamAdapter
 import com.example.teamup.dataClass.Team
-import com.example.teamup.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeFragment : Fragment() {
-
+class TeamLeaderFragment : Fragment() {
     private var itemList = ArrayList<Team>()
     private lateinit var recView: RecyclerView
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+//   应用布局
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_team_leader, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        Toast.makeText(activity, "11111", Toast.LENGTH_SHORT).show()
 
         initList()
-        recView = view.findViewById(R.id.home_recy_view)
+        recView = view.findViewById<RecyclerView>(R.id.team_leader_recyview)
         val adapter = TeamAdapter(itemList)
         recView.adapter = adapter
         recView.layoutManager = LinearLayoutManager(activity) // 线性布局
@@ -57,10 +44,5 @@ class HomeFragment : Fragment() {
                 0,
                 0)
         ) }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

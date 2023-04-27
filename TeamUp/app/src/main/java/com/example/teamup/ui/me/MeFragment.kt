@@ -80,7 +80,6 @@ class MeFragment : Fragment() {
             activity?.overridePendingTransition(R.anim.slide_f_b,R.anim.slide_t_t)
             activity?.finish()
         }
-
         binding.userinfoMenu.setOnClickListener {
 
 
@@ -112,6 +111,7 @@ class MeFragment : Fragment() {
 
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
