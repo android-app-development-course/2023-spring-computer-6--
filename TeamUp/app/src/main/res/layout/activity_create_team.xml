@@ -50,24 +50,21 @@
             android:layout_marginHorizontal="30dp"
             />
             <EditText
-                android:id="@+id/create_team_img"
+                android:id="@+id/create_team_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                app:layout_constraintTop_toBottomOf="@id/welc"
-                android:layout_marginTop="15dp"
-                android:layout_marginHorizontal="30dp"
-
                 android:background="@drawable/rounded_rectangle_edit"
-                android:hint="团队图像"
+                android:hint="截止日期"
                 android:textColorHint="#A1A1A1"
 
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:imeOptions="actionNext"
-                android:inputType="text"
-                android:paddingStart="7sp"
-                android:paddingEnd="30sp"
+                android:inputType="date"
+                android:paddingHorizontal="7sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginHorizontal="30dp"
                 />
 
             <LinearLayout
@@ -83,12 +80,13 @@
                     android:text = "最大人数: "
                     android:textSize="24sp"/>
 
-                <NumberPicker
+                <EditText
                     android:id="@+id/num_of_attendees"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center"
+                    android:inputType="number"
                     android:background="@color/white"
                     android:textColor="@color/black"
                     android:textSize="24sp"/>
