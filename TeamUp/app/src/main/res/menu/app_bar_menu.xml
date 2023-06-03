@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_team"
+        android:icon="@drawable/team_foreground"
+        android:title="@string/title_team"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/navigation_me"
+        android:icon="@drawable/my_page_foreground"
+        android:title="@string/title_me"
+        app:showAsAction="ifRoom" />
+
+</menu>
