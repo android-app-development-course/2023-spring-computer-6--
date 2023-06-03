@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var anim: ValueAnimator
     private lateinit var circleView: View
 
-    private var islogin = true   // 是否已经登录
+    private var islogin = false   // 是否已经登录
     private var isNavView: Boolean = true   // 是否为Nav底边栏
     private var maxRadius = 200.0 // 圆形视图的最大半径
     private var FirstLoading = true

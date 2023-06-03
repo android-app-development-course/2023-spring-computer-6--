@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.teamup.MainActivity
 import com.example.teamup.R
 import com.example.teamup.adapter.TeamAdapter
 import com.example.teamup.dataClass.Team
@@ -42,6 +44,13 @@ class HomeFragment : Fragment() {
         val adapter = TeamAdapter(itemList)
         recView.adapter = adapter
         recView.layoutManager = LinearLayoutManager(activity) // 线性布局
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(context,"1asas",Toast.LENGTH_SHORT).show()
+
+
     }
 
     private  fun initList(){
