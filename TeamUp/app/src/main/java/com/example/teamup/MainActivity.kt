@@ -149,13 +149,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(FirstLoading) {
-            FirstLoading = false
-            Toast.makeText(this,"11222",Toast.LENGTH_LONG).show()
-            overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
-        }else{
-            overridePendingTransition(0,0)
-        }
+//        if(FirstLoading) {
+//            FirstLoading = false
+//            Toast.makeText(this,"11222",Toast.LENGTH_LONG).show()
+//            overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
+//        }else{
+//            overridePendingTransition(0,0)
+//        }
 
         if (needShrinkAnimation) {
             // 创建缩小动画
@@ -184,4 +184,6 @@ class MainActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment = fragments[position]
     }
+
+
 }

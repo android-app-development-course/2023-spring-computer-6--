@@ -3,6 +3,8 @@ package com.example.teamup.ui
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -24,7 +26,8 @@ class DialogFragment : DialogFragment() {
         val view = inflater?.inflate(R.layout.fragment_dialog, null)
 
         builder.setView(view)
-            .setTitle("点击确定按钮登录")
+
+        builder.setTitle("点击确定按钮登录")
             .setMessage("目前处于游客状态")
             .setPositiveButton("确定") { dialog, id ->
 //                跳转至 登录页面
@@ -35,6 +38,10 @@ class DialogFragment : DialogFragment() {
 
         val dialog = builder.create()
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimationStyle
+        dialog.setCanceledOnTouchOutside(false) //点空白处不取消会话
+
+
+
 
         return dialog
     }

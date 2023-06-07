@@ -4,7 +4,7 @@
     android:duration="500"
     android:fillAfter="true">
 
-    <translate android:fromYDelta="120%"
+    <translate android:fromYDelta="148%"
         android:toYDelta="0%"/>
 
 </set>

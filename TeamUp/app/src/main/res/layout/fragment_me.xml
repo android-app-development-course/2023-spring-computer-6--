@@ -14,16 +14,25 @@
         android:layout_width="match_parent"
         android:layout_height="230dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#4284f0"
+        android:background="@drawable/meinfo_bgbox2"
 
         />
+
+    <com.example.teamup.WaveView3
+        android:id="@+id/userinfo_wave2"
+        android:layout_width="match_parent"
+        android:layout_height="710dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:alpha=".5"/>
 
     <com.example.teamup.WaveView
         android:id="@+id/userinfo_wave"
         android:layout_width="match_parent"
-        android:layout_height="720dp"
+        android:layout_height="700dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:alpha="1"/>
+
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,15 +69,15 @@
 
         <TextView
             android:id="@+id/userinfo_username"
-            android:layout_width="175dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
             app:layout_constraintStart_toStartOf="@id/round_image"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/userinfo_box"
             android:layout_marginStart="125dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="100dp"
             android:text="立即登录"
-            android:textSize="30sp"
+            android:textSize="32sp"
             android:gravity="center_vertical"
             android:clickable="true"
             android:focusable="true"
@@ -78,14 +87,14 @@
 
         <TextView
             android:id="@+id/userinfo_account_t"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/round_image"
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
             android:text="账号"
             android:textSize="28sp"
             android:layout_marginLeft="35dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="33dp"
 
             />
 
@@ -94,7 +103,7 @@
             android:layout_height="50dp"
             app:layout_constraintEnd_toStartOf="@id/userinfo_account_t"
             app:layout_constraintTop_toBottomOf="@id/round_image"
-            android:layout_marginTop="41dp"
+            android:layout_marginTop="24dp"
             android:layout_marginRight="-10dp"
             android:src="@drawable/arrow_right"
             />
@@ -102,15 +111,14 @@
 
         <TextView
             android:id="@+id/userinfo_account_c"
-            android:layout_width="195dp"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-10dp"
             app:layout_constraintStart_toEndOf="@id/userinfo_account_t"
             app:layout_constraintTop_toBottomOf="@id/round_image"
             android:text=""
             android:textSize="28sp"
 
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="33dp"
 
             />
 
@@ -133,7 +141,7 @@
 
         <TextView
             android:id="@+id/userinfo_school_t"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/userinfo_account_t"
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
@@ -157,13 +165,12 @@
 
         <TextView
             android:id="@+id/userinfo_school_c"
-            android:layout_width="195dp"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/userinfo_school_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_account_t"
             android:text=""
             android:textSize="28sp"
-            android:layout_marginLeft="-10dp"
             android:layout_marginTop="30dp"
 
             />
@@ -186,7 +193,7 @@
 
         <TextView
             android:id="@+id/userinfo_major_t"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/userinfo_school_t"
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
@@ -210,13 +217,12 @@
 
         <TextView
             android:id="@+id/userinfo_major_c"
-            android:layout_width="195dp"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/userinfo_major_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_school_t"
             android:text=""
             android:textSize="28sp"
-            android:layout_marginLeft="-10dp"
             android:layout_marginTop="30dp"
 
             />
@@ -241,7 +247,7 @@
 
         <TextView
             android:id="@+id/userinfo_gender_t"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/userinfo_major_t"
             app:layout_constraintStart_toStartOf="@id/userinfo_box"
@@ -265,13 +271,12 @@
 
         <TextView
             android:id="@+id/userinfo_gender_c"
-            android:layout_width="195dp"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/userinfo_gender_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_major_t"
             android:text=""
             android:textSize="28sp"
-            android:layout_marginLeft="-10dp"
             android:layout_marginTop="30dp"
 
             />
@@ -313,18 +318,20 @@
 
         <TextView
             android:id="@+id/userinfo_resume_c"
-            android:layout_width="215dp"
-            android:layout_height="100dp"
-            app:layout_constraintStart_toEndOf="@id/userinfo_gender_t"
+            android:layout_width="210dp"
+            android:layout_height="120dp"
+            app:layout_constraintStart_toEndOf="@id/userinfo_resume_t"
             app:layout_constraintTop_toBottomOf="@id/userinfo_gender_t"
+            android:scrollbars="vertical"
+
             android:text=""
             android:textSize="26sp"
             android:background="@drawable/resume_box"
             android:layout_marginLeft="-10dp"
             android:layout_marginTop="30dp"
-            android:paddingLeft="12dp"
+            android:paddingLeft="16dp"
             android:paddingRight="12dp"
-            android:paddingTop="1dp"
+            android:paddingTop="3dp"
             android:paddingBottom="1dp"
             />
 
@@ -349,14 +356,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/userinfo_menu_box"
         android:layout_width="180dp"
-        android:layout_height="150dp"
+        android:layout_height="195dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="-25dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="0dp"
         android:background="@drawable/userinfo_menu_box"
-
+        android:clickable="false"
         android:visibility="invisible"
         >
 
@@ -388,6 +395,23 @@
             android:clickable="true"
             android:focusable="true"
             android:textColor="@color/white"
+
+            />
+
+        <TextView
+            android:id="@+id/userinfo_menu_logout_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="退出登录"
+            app:layout_constraintTop_toBottomOf="@id/userinfo_menu_code_c"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/white"
+
             />
 
 

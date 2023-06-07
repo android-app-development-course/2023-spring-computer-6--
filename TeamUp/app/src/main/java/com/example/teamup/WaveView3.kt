@@ -10,13 +10,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
 
-class WaveView(context: Context?, attrs: AttributeSet?):
+class WaveView3(context: Context?, attrs: AttributeSet?):
     View(context, attrs)  {
     private var width = 0
     private var height = 0
     private var baseLine = 0 // 基线，用于控制水位上涨的，这里是写死了没动，你可以不断的设置改变。
     private var mPaint: Paint? = null
-    private val waveHeight = 140 // 波浪的最高度
+    private val waveHeight = 150 // 波浪的最高度
     private var waveWidth //波长
             = 0
     private var offset = 0f //偏移量
@@ -25,7 +25,7 @@ class WaveView(context: Context?, attrs: AttributeSet?):
     }
     private fun initView() {
         mPaint = Paint()
-        mPaint!!.color =Color.parseColor("#4586F0")
+        mPaint!!.color =Color.parseColor("#69A3F0")
         mPaint!!.style = Paint.Style.FILL
     }
     /**
@@ -40,8 +40,8 @@ class WaveView(context: Context?, attrs: AttributeSet?):
             offset = animatorValue //不断的设置偏移量，并重画
             postInvalidate()
         }
-        mAnimator.duration = 7000
-        mAnimator.startDelay=-1000
+        mAnimator.duration = 3500
+        mAnimator.startDelay=-1500
         mAnimator.repeatCount = ValueAnimator.INFINITE
         mAnimator.start()
     }

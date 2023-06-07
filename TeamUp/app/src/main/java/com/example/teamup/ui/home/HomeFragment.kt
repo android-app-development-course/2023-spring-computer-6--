@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(context,"1asas",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,"1asas",Toast.LENGTH_SHORT).show()
 
 
     }

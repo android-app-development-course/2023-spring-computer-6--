@@ -4,6 +4,6 @@
     android:fillAfter="true">
 
     <translate android:fromYDelta="0%"
-        android:toYDelta="120%"/>
+        android:toYDelta="148%"/>
 
 </set>

@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DialogFragment">
+    tools:context=".ui.DialogFragment"
+    >
 
     <EditText
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="300dp"
         android:background="@color/hint"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         />
 
 

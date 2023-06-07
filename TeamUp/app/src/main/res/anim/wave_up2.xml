@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:duration="4500"
+    android:duration="3100"
+    android:startOffset="-100"
     tools:ignore="MissingDefaultResource">
 
     <translate android:fromYDelta="110%"
