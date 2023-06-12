@@ -5,13 +5,20 @@ import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
+import androidx.core.view.isInvisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.bmob.v3.Bmob
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.QueryListener
 import com.example.teamup.R
 import com.example.teamup.DataClass.TeamInfo
+import com.example.teamup.DataClass.User
+import com.example.teamup.MainActivity
 
-class TeamAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<TeamAdapter.ViewHolder>() {
+class TeamLeaderAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<TeamLeaderAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_team, parent, false)
@@ -30,7 +37,6 @@ class TeamAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<T
     @SuppressLint("InflateParams")
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titleView: TextView = itemView.findViewById(R.id.CompetitionName)
-        private val teamInfoView: TextView = itemView.findViewById(R.id.create_team_info)
         private val dateView: TextView = itemView.findViewById(R.id.team_deadline)
         private val attendeeView: TextView = itemView.findViewById(R.id.team_attendees)
         private val leaderNameView: TextView = itemView.findViewById(R.id.LeaderName)
@@ -45,23 +51,18 @@ class TeamAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<T
 
                 // 打开对话框
                 val dialog = Dialog(itemView.context)
-                val view = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_join_team, null)
+                val view = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_team_leader, null)
                 dialog.setContentView(view)
 
                 // 设置对话框标题
-                val dialogTitle = view.findViewById<TextView>(R.id.join_team_title)
+                val dialogTitle = view.findViewById<TextView>(R.id.leader_team_title)
                 dialogTitle.text = item.competitionName
 
-                // 设置简介内容
-                val dialogInfo = view.findViewById<TextView>(R.id.join_team_info)
-                dialogInfo.text = item.information
+                // 设置队员列表
+                val dialogMembers = view.findViewById<RecyclerView>(R.id.lead_team_member_recyview)
+                item.members?.let { dialogMembers.adapter = DialogLeaderAdapter(it) }
 
-                // 加入按钮 监听事件
-                val btnJoinTeam = view.findViewById<Button>(R.id.btnJoinTeam)
-                btnJoinTeam.setOnClickListener {
-
-                }
-
+                dialogMembers.layoutManager = LinearLayoutManager(MainActivity()) // 线性布局
                 dialog.show()
             }
         }
@@ -69,13 +70,22 @@ class TeamAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<T
         //        布局与数据的绑定，设置对应布局的文本
         @SuppressLint("SetTextI18n")
         fun bind(item: TeamInfo) {
-            titleView.text = item.competitionName
-            teamInfoView.text = item.information
-            dateView.text = item.deadline
-            attendeeView.text = item.curNum.toString()  + '/' + item.expectedNum.toString()
-            leaderNameView.text = item.leader.userName
-            leaderSchoolView.text = item.leader.university
-            leaderMajorView.text = item.leader.major
+
+            // 查询数据库 获得 UserName
+            val LeaderDetailQuery = BmobQuery<User>()
+            LeaderDetailQuery.getObject(item.leader, object : QueryListener<User>() {
+                override fun done(UserItem: User?, e: BmobException?) {
+                    if (e == null && UserItem != null) {
+                        titleView.text = item.competitionName
+                        dateView.text = item.deadline
+                        attendeeView.text = item.curNum.toString()  + '/' + item.expectedNum.toString()
+                        leaderNameView.text = UserItem.userName// 设置 用户名
+                        leaderSchoolView.text = UserItem.university// 设置 学校
+                        leaderMajorView.text = UserItem.major// 设置 专业
+                    }
+                }
+            })
+
         }
     }
 }

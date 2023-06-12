@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="80dp"
     android:layout_margin="8dp"
-    app:cardCornerRadius="25dp"
+    app:cardCornerRadius="15dp"
     app:cardBackgroundColor="@color/blue_light"
     >
     <LinearLayout
@@ -13,78 +13,42 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <!-- 左侧 队长的姓名、学校、专业 -->
+        <!-- 左侧 团队成员的姓名、学校、专业 -->
         <LinearLayout
-            android:layout_width="120dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="8dp">
-            <!-- 队长名称 -->
+            android:padding="8dp"
+            android:layout_weight="1">
+            <!--  成员名称 -->
             <TextView
-                android:id="@+id/LeaderName"
+                android:id="@+id/MemberName_Member"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Team Member"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- 队长学校 -->
+            <!-- 成员学校 -->
             <TextView
-                android:id="@+id/LeaderUniversity"
+                android:id="@+id/MemberUniversity_Member"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="LeaderUniversity"
+                android:text="Member University"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textSize="15sp"
                 android:layout_gravity="end|bottom" />
-            <!-- 队长专业 -->
+            <!-- 成员专业 -->
             <TextView
-                android:id="@+id/LeaderMajor"
+                android:id="@+id/MemberMajor_Member"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="LeaderMajor"
+                android:text="Member Major"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textSize="15sp"
                 android:layout_gravity="end|bottom"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <!-- 标题 -->
-            <TextView
-                android:id="@+id/CompetitionName"
-                android:layout_width="match_parent"
-                android:layout_height="18sp"
-                android:text="CompetitionName"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:ellipsize="end"
-                android:layout_weight="1"/>
-
-            <!-- 参加人数 -->
-            <TextView
-                android:id="@+id/team_attendees"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10/20"
-                android:textSize="18sp"
-                android:layout_gravity="end|bottom" />
-            <!-- 截止时间 -->
-            <TextView
-                android:id="@+id/team_deadline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2020-10-10 10:10"
-                android:textSize="14sp"
-                android:layout_gravity="end|bottom" />
-
         </LinearLayout>
     </LinearLayout>
 

@@ -4,7 +4,10 @@
     <string name="title_team">团队</string>
     <string name="title_me">我的</string>
     <string name="search_prompt">Select search option</string>
-    <string name="search_hint"></string>
+    <string name="search_hint" />
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="teamInfoHint">团队简介</string>
+    <string name="btnJoinTeam">加入</string>
+    <string name="btnExitTeam">退出团队</string>
 </resources>

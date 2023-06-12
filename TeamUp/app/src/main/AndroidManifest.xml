@@ -45,7 +45,7 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
         <activity
-            android:name=".dialog.DialogFragment"
+            android:name=".DialogUnLogin"
             android:exported="true" />
         <activity
             android:name=".CreateTeamActivity"

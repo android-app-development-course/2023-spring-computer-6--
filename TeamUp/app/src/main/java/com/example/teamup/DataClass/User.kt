@@ -1,17 +1,15 @@
-package com.example.teamup.dataClass
+package com.example.teamup.DataClass
 
-import com.example.teamup.dataClass.TeamInfo
+import cn.bmob.v3.BmobObject
 
-data class User(
-    var objectId:String,
-    var userName:String,
-    var account:String,
-    var password:String,
-    var university:String,
-    var major:String,
-    var gender:String,
-    var resume:String,
-    var joinTeam:Array<TeamInfo>,
-    var leadTeam:Array<TeamInfo>
-
-)
+class User(
+    var userName:String? =null,
+    var account:String? =null,
+    var password:String? =null,
+    var university:String? =null,
+    var major:String? =null,
+    var gender:String? =null,
+    var resume:String? =null,
+    var joinTeam:Array<String>? =null, // 作为队员的 TeamInfo.ObjectID
+    var leadTeam:Array<String>? =null // 作为队长的 TeamInfo.ObjectID
+):BmobObject()

@@ -1,7 +1,5 @@
-package com.example.teamup.ui.home
+package com.example.teamup.ViewPagerUI.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {

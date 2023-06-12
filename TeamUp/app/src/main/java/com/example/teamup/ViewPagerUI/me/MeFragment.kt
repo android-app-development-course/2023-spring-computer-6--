@@ -1,19 +1,15 @@
-package com.example.teamup.ui.me
+package com.example.teamup.ViewPagerUI.me
 
 import android.content.Intent
-import android.content.res.AssetManager
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.teamup.LoginActivity
-import com.example.teamup.MainActivity
 import com.example.teamup.R
 import com.example.teamup.databinding.FragmentMeBinding
 
@@ -70,8 +66,6 @@ class MeFragment : Fragment() {
         binding.userinfoMenuCodeC.setTypeface(face)
         binding.userinfoMenuInfoC.setTypeface(face)
 
-
-
         binding.userinfoUsername.setOnClickListener {
 
             val intent=  Intent(activity,LoginActivity::class.java) //用于跳转
@@ -82,8 +76,6 @@ class MeFragment : Fragment() {
         }
 
         binding.userinfoMenu.setOnClickListener {
-
-
 
             if(menuJudge==false){
                 binding.userinfoMenuBox.startAnimation(AnimationUtils.loadAnimation(context,R.anim.userinfo_menu_f_b))
@@ -98,8 +90,6 @@ class MeFragment : Fragment() {
             }
 
         }
-
-
 
         return root
     }

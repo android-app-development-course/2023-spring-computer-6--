@@ -1,7 +1,5 @@
-package com.example.teamup.ui.team
+package com.example.teamup.ViewPagerUI.team
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class TeamViewModel : ViewModel() {

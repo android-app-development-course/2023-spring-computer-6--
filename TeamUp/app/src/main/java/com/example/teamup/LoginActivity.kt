@@ -1,6 +1,7 @@
 package com.example.teamup
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -37,9 +38,9 @@ class LoginActivity : AppCompatActivity() {
         login_btn.setTypeface(face)
 
         //密码是否可见
-        var judge1:Boolean=false
-        var code_vis: ImageView =findViewById<ImageView>(R.id.password_vis)
-        var code_edit: EditText =findViewById<EditText>(R.id.password)
+        var judge1 = false
+        var code_vis: ImageView =findViewById(R.id.password_vis)
+        var code_edit: EditText =findViewById(R.id.password)
         code_vis.setOnClickListener{
             if(judge1==false){
                 code_vis.setImageResource(R.drawable.visible)
@@ -64,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             val accountEditText = findViewById<EditText>(R.id.account)
             val passwordEditText = findViewById<EditText>(R.id.password)
 
-            // (暂时) 直接登录成功，不进行判断
+            // 登录成功
             if(false) {
                 val resultAccount = accountEditText.text.toString()
                 val resultPassword = passwordEditText.text.toString()
@@ -72,6 +73,14 @@ class LoginActivity : AppCompatActivity() {
                     putExtra("resultAccount", resultAccount)
                     putExtra("resultPassword", resultPassword)
                 }
+
+                // 写入共享内存
+//                val editor = getSharedPreferences("LocalUser",Context.MODE_PRIVATE).edit()
+//                editor.putString("LoginID",resultAccount)
+//                editor.putString("PassWord",resultPassword)
+//                editor.apply()
+
+
                 setResult(Activity.RESULT_OK, intent)
                 startActivity(intent)
                 finish()
@@ -81,6 +90,7 @@ class LoginActivity : AppCompatActivity() {
 //        预览按钮
         findViewById<TextView>(R.id.preview).setOnClickListener{
             val intent= Intent(this,MainActivity::class.java) //用于跳转
+            intent.putExtra("LoginID","")
             startActivity(intent)
             overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
             finish()

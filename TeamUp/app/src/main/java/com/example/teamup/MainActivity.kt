@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -13,17 +14,17 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.example.teamup.dialog.DialogFragment
-import com.example.teamup.ui.home.HomeFragment
-import com.example.teamup.ui.me.MeFragment
-import com.example.teamup.ui.team.TeamFragment
+import cn.bmob.v3.Bmob
+import com.example.teamup.ViewPagerUI.home.HomeFragment
+import com.example.teamup.ViewPagerUI.me.MeFragment
+import com.example.teamup.ViewPagerUI.team.TeamFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlin.math.hypot
 
@@ -32,38 +33,51 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MyPagerAdapter
     private lateinit var anim: ValueAnimator
     private lateinit var circleView: View
+    private var UserID = "-1"    // 登录 ID, 没有登录为 -1
+    fun isLogin():Boolean = UserID != "-1"
 
-    private var islogin = false   // 是否已经登录
-    private var isNavView: Boolean = true   // 是否为Nav底边栏
     private var maxRadius = 200.0 // 圆形视图的最大半径
-    private var FirstLoading = true
     private var needShrinkAnimation = false // 是否需要执行缩小动画的标志
+    private var isFirstLoading = true
+//    private var isNavView: Boolean = true   // 是否为Nav底边栏
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide() // 隐藏顶部栏
+        val BMOB_APPLICATION_ID = "8c5d3063d4274ca12e441a23f1a5261d"
+        Bmob.initialize(this, BMOB_APPLICATION_ID)
+        // 参数传递 sharedPreferences
+//        val intent = Intent()
+//        intent.putExtra("id",UserID)
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString("id",UserID)
+        Toast.makeText(this, "From MainActivity: UserID = ${UserID}", Toast.LENGTH_SHORT).show()
+        editor.apply()
 
 //       btnNewActivity 新建 添加监听事件
         val btnCreateTeam = findViewById<FloatingActionButton>(R.id.btnCreateTeam)
         btnCreateTeam.setOnClickListener{view ->
 //            如果没有登录则打开登录提示
-            if(!islogin)
-                DialogFragment().show(supportFragmentManager,"DialogFragment")
+            if(!isLogin())
+                DialogUnLogin().show(supportFragmentManager,"DialogFragment")
             else {
                 // 播放放大动画
                 fabScaleAnim(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         needShrinkAnimation = true
-                        val intent = Intent(this@MainActivity,CreateTeamActivity::class.java)
-                        startActivity(intent)
+                        val CreateTeamIntent = Intent(this@MainActivity,CreateTeamActivity::class.java)
+                        intent.putExtra("id",UserID)
+                        startActivity(CreateTeamIntent)
                     }
                 })
             }
         }
 
-        viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        viewPager = findViewById(R.id.viewPager)
         adapter = MyPagerAdapter(this)
         viewPager.adapter = adapter
 
@@ -73,7 +87,6 @@ class MainActivity : AppCompatActivity() {
 //      底部导航栏 nav
         var bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigationView.selectedItemId=R.id.navigation_home //初始底部栏为首页
-
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_team -> {
@@ -142,12 +155,11 @@ class MainActivity : AppCompatActivity() {
         anim.start()
     }
 
-
     override fun onResume() {
         super.onResume()
-        if(FirstLoading) {
-            FirstLoading = false
-            Toast.makeText(this,"11222",Toast.LENGTH_LONG).show()
+        if(isFirstLoading) {
+            isFirstLoading = false
+//            Toast.makeText(this,"11222",Toast.LENGTH_LONG).show()
             overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
         }else{
             overridePendingTransition(0,0)
@@ -167,17 +179,15 @@ class MainActivity : AppCompatActivity() {
             }
             // 启动动画
             anim.start()
-            // 将标志重置为 false，以便下次不会执行动画
+            // 将标志重置为 false，下次不会执行动画
             needShrinkAnimation = false
         }
     }
 
-
     private class MyPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
         private val fragments = listOf(TeamFragment(), HomeFragment(), MeFragment())
-
         override fun getItemCount(): Int = fragments.size
-
         override fun createFragment(position: Int): Fragment = fragments[position]
     }
 }
+
