@@ -141,27 +141,50 @@ class MeFragment : Fragment() {
         
         //修改信息
         binding.userinfoMenuInfoC.setOnClickListener {
-            Toast.makeText(context,"修改信息",Toast.LENGTH_SHORT).show()
-            InfoDialogFragment().show(parentFragmentManager,"InfoDialogFragment")
+
+            val userId = requireActivity().intent.getStringExtra("id")
+            if(userId=="-1"){
+                Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(context,"修改信息",Toast.LENGTH_SHORT).show()
+                InfoDialogFragment().show(parentFragmentManager,"InfoDialogFragment")
+
+            }
 
 
 
         }
         //更改密码
         binding.userinfoMenuCodeC.setOnClickListener {
-            Toast.makeText(context,"更改密码",Toast.LENGTH_SHORT).show()
-            PasswordDialogFragment().show(parentFragmentManager,"PasswordDialogFragment")
+            val userId = requireActivity().intent.getStringExtra("id")
 
+            if(userId=="-1"){
+                Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(context, "更改密码", Toast.LENGTH_SHORT).show()
+                PasswordDialogFragment().show(parentFragmentManager, "PasswordDialogFragment")
+            }
         }
 
         //退出登录
         binding.userinfoMenuLogoutC.setOnClickListener {
-            Toast.makeText(context,"退出登录",Toast.LENGTH_SHORT).show()
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+            val userId = requireActivity().intent.getStringExtra("id")
 
-            val activity: Activity? = activity
-            activity?.finish()
+            if(userId=="-1"){
+                Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(context,"退出登录",Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+
+                val activity: Activity? = activity
+                activity?.finish()
+            }
+
+
 
         }
 
@@ -187,36 +210,40 @@ class MeFragment : Fragment() {
         val userId = requireActivity().intent.getStringExtra("id")
 //        Toast.makeText(context,"Id为："+userId,Toast.LENGTH_LONG).show()
 
-        val query = BmobQuery<User>()
+        if(userId!="-1"){
+            val query = BmobQuery<User>()
 
-        // 添加查询条件
-        query.addWhereEqualTo("objectId", userId)
+            // 添加查询条件
+            query.addWhereEqualTo("objectId", userId)
 
-        // 执行查询，并在回调函数中处理查询结果
-        query.findObjects(object : FindListener<User>() {
-            override fun done(persons: MutableList<User>?, e: BmobException?) {
-                if (e == null) {
-                    // 查询成功，处理查询结果
-                    if (persons != null && persons.size == 1) {
-                        binding.userinfoUsername.setText(persons[0].userName)
-                        binding.userinfoAccountC.setText(persons[0].account)
-                        binding.userinfoSchoolC.setText(persons[0].university)
-                        binding.userinfoMajorC.setText(persons[0].major)
-                        binding.userinfoGenderC.setText(persons[0].gender)
-                        binding.userinfoResumeC.setText(persons[0].resume)
+            // 执行查询，并在回调函数中处理查询结果
+            query.findObjects(object : FindListener<User>() {
+                override fun done(persons: MutableList<User>?, e: BmobException?) {
+                    if (e == null) {
+                        // 查询成功，处理查询结果
+                        if (persons != null && persons.size == 1) {
+                            binding.userinfoUsername.setText(persons[0].userName)
+                            binding.userinfoAccountC.setText(persons[0].account)
+                            binding.userinfoSchoolC.setText(persons[0].university)
+                            binding.userinfoMajorC.setText(persons[0].major)
+                            binding.userinfoGenderC.setText(persons[0].gender)
+                            binding.userinfoResumeC.setText(persons[0].resume)
 
 
 
+                        } else {
+                            // 没有查询到符合条件的数据(不可达)
+
+                        }
                     } else {
-                        // 没有查询到符合条件的数据(不可达)
+                        Toast.makeText(context,"用户信息获取失败，请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
 
                     }
-                } else {
-                    Toast.makeText(context,"用户信息获取失败，请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
-
                 }
-            }
-        })
+            })
+        }
+
+
 
 
 

@@ -57,6 +57,7 @@ class InfoDialogFragment : DialogFragment() {
         title.typeface=face
         builder.setCustomTitle(title)
 
+
         //先读取数据库信息
 
         val userId = requireActivity().intent.getStringExtra("id")
