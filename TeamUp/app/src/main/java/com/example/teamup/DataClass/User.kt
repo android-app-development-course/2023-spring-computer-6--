@@ -1,4 +1,6 @@
-package com.example.teamup
+package com.example.teamup.dataClass
+
+import com.example.teamup.dataClass.TeamInfo
 
 data class User(
     var objectId:String,

@@ -1,18 +1,18 @@
-package com.example.teamup.ui
+package com.example.teamup.Dialog
 
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AlertDialog
-import com.example.teamup.CreateTeamActivity
 import com.example.teamup.LoginActivity
 import com.example.teamup.MainActivity
 import com.example.teamup.R
 
-class DialogFragment : DialogFragment() {
+class DialogUnLogin : DialogFragment() {
 
     private val REQUEST_CODE = 1
 
@@ -20,8 +20,7 @@ class DialogFragment : DialogFragment() {
 
 //        创建对话框
         val builder = AlertDialog.Builder(requireActivity())
-        val inflater = activity?.layoutInflater
-        val view = inflater?.inflate(R.layout.fragment_dialog, null)
+        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_un_login,null)
 
         builder.setView(view)
             .setTitle("点击确定按钮登录")

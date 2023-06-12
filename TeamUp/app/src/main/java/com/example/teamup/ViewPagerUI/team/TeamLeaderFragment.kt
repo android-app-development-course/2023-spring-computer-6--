@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teamup.R
+import com.example.teamup.dataClass.TeamInfo
 import com.example.teamup.adapter.TeamAdapter
-import com.example.teamup.dataClass.Team
 
 class TeamLeaderFragment : Fragment() {
-    private var itemList = ArrayList<Team>()
+    private var itemList = ArrayList<TeamInfo>()
     private lateinit var recView: RecyclerView
 //   应用布局
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,17 +31,17 @@ class TeamLeaderFragment : Fragment() {
     }
 
     private  fun initList(){
-        repeat(20)
-        { itemList.add(
-            Team(1,
-                "标题",
-                "简介",
-                "日期",
-                "时间",
-                "",
-                R.mipmap.teamup_logo,
-                0,
-                0)
-        ) }
+//        repeat(20)
+//        { itemList.add(
+//            Team(1,
+//                "标题",
+//                "简介",
+//                "日期",
+//                "时间",
+//                "",
+//                R.mipmap.teamup_logo,
+//                0,
+//                0)
+//        ) }
     }
 }

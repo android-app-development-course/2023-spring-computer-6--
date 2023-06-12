@@ -1,25 +1,21 @@
-package com.example.teamup.ui.home
+package com.example.teamup.ViewPagerUI.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.teamup.MainActivity
 import com.example.teamup.R
-import com.example.teamup.adapter.TeamAdapter
-import com.example.teamup.dataClass.Team
+import com.example.teamup.DataClass.TeamInfo
 import com.example.teamup.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
 
-    private var itemList = ArrayList<Team>()
+    private var itemList = ArrayList<TeamInfo>()
     private lateinit var recView: RecyclerView
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -41,31 +37,30 @@ class HomeFragment : Fragment() {
 
         initList()
         recView = view.findViewById(R.id.home_recy_view)
-        val adapter = TeamAdapter(itemList)
+        val adapter = HomeAdapter(itemList)
         recView.adapter = adapter
         recView.layoutManager = LinearLayoutManager(activity) // 线性布局
     }
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(context,"1asas",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,"1asas",Toast.LENGTH_SHORT).show()
 
 
     }
 
     private  fun initList(){
-        repeat(20)
-        { itemList.add(
-            Team(1,
-                "标题",
-                "简介",
-                "日期",
-                "时间",
-                "",
-                R.mipmap.teamup_logo,
-                0,
-                0)
-        ) }
+//        repeat(20)
+//        { itemList.add(
+//            TeamInfo(   1,
+//                "标题",
+//                "简介",
+//                "日期",
+//                "时间",
+//                "",
+//                0,
+//                0)
+//        ) }
     }
 
     override fun onDestroyView() {

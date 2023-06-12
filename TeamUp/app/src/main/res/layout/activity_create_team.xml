@@ -1,7 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <TextView
         android:id="@+id/create_a_team"
@@ -35,7 +36,7 @@
         <EditText
             android:id="@+id/create_team_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
 
             android:background="@drawable/rounded_rectangle_edit"
             android:hint="团队名称"
@@ -50,9 +51,9 @@
             android:layout_marginHorizontal="30dp"
             />
             <EditText
-                android:id="@+id/create_team_date"
+                android:id="@+id/deadline"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
 
                 android:background="@drawable/rounded_rectangle_edit"
                 android:hint="截止日期"
@@ -91,25 +92,25 @@
                     android:textColor="@color/black"
                     android:textSize="24sp"/>
             </LinearLayout>
-            <EditText
-                android:id="@+id/create_team_summary"
+
+            <TextView
+                android:id="@+id/create_team_info"
                 android:layout_width="match_parent"
                 android:layout_height="0sp"
-                android:layout_weight="1"
+                android:layout_marginHorizontal="30dp"
 
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:layout_marginHorizontal="30dp"
+                android:layout_weight="1"
 
                 android:background="@drawable/rounded_rectangle_edit"
                 android:hint="团队简介"
-                android:textColorHint="@color/hint"
-
-                android:textColor="@color/black"
-                android:textSize="25sp"
                 android:imeOptions="actionNext"
+
                 android:paddingHorizontal="7sp"
-                />
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                android:textSize="25sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

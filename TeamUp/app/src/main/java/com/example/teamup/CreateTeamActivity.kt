@@ -1,19 +1,24 @@
 package com.example.teamup
 
-
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.graphics.Typeface
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import com.example.teamup.ui.DialogFragment
+import com.example.teamup.dialog.DialogFragment
+import java.text.SimpleDateFormat
 
 class CreateTeamActivity : AppCompatActivity() {
 
@@ -33,13 +38,9 @@ class CreateTeamActivity : AppCompatActivity() {
 
 
         supportActionBar?.hide() // 隐藏顶部栏
-
         mCardView = findViewById(R.id.cardview_create_a_team)
         mTextView = findViewById(R.id.create_a_team)
         mbtnLayout = findViewById(R.id.btn_create_team_layout)
-
-//        val displayMetrics = resources.displayMetrics
-
         startAnim()
 
 //        点击确定按钮的监听事件
@@ -61,6 +62,41 @@ class CreateTeamActivity : AppCompatActivity() {
                 finish()
             }, 800)
         }
+//      点击 截止日期 文本，显示 日期时间选择 的对话框
+        val dateEditText = findViewById<EditText>(R.id.deadline)
+        dateEditText.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                val calendar: Calendar = Calendar.getInstance()
+                val year: Int = calendar.get(Calendar.YEAR)
+                val month: Int = calendar.get(Calendar.MONTH)
+                val dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
+                val hourOfDay: Int = calendar.get(Calendar.HOUR_OF_DAY)
+                val minute: Int = calendar.get(Calendar.MINUTE)
+                val datePickerDialog = DatePickerDialog(this@CreateTeamActivity,
+                    { view, year, month, dayOfMonth -> // 在此处处理选定的日期
+                        calendar.set(Calendar.YEAR, year)
+                        calendar.set(Calendar.MONTH, month)
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    }, year, month, dayOfMonth
+                )
+                datePickerDialog.setOnCancelListener {
+                    // 处理取消对话框事件
+                }
+                val timePickerDialog = TimePickerDialog(this@CreateTeamActivity,
+                    { view, hourOfDay, minute -> // 在此处处理选定的时间
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                        calendar.set(Calendar.MINUTE, minute)
+
+                        // 将日期和时间格式化为字符串并设置到 EditText 中
+                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+                        val dateTimeString: String = sdf.format(calendar.getTime())
+                        dateEditText.setText(dateTimeString)
+                    }, hourOfDay, minute, true
+                )
+                datePickerDialog.show()
+                timePickerDialog.show()
+            }
+        })
     }
 
     private fun startAnim() {
