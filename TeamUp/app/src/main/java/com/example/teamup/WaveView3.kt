@@ -10,23 +10,22 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
 
-class WaveView2(context: Context?, attrs: AttributeSet?):
+class WaveView3(context: Context?, attrs: AttributeSet?):
     View(context, attrs)  {
     private var width = 0
     private var height = 0
     private var baseLine = 0 // 基线，用于控制水位上涨的，这里是写死了没动，你可以不断的设置改变。
     private var mPaint: Paint? = null
-    private val waveHeight = 130 // 波浪的最高度
-    private var waveWidth = 0//波长
+    private val waveHeight = 150 // 波浪的最高度
+    private var waveWidth //波长
+            = 0
     private var offset = 0f //偏移量
-
     init {
         initView()
     }
-
     private fun initView() {
         mPaint = Paint()
-        mPaint!!.color =Color.parseColor("#ffffff")
+        mPaint!!.color =Color.parseColor("#69A3F0")
         mPaint!!.style = Paint.Style.FILL
     }
     /**
@@ -41,7 +40,8 @@ class WaveView2(context: Context?, attrs: AttributeSet?):
             offset = animatorValue //不断的设置偏移量，并重画
             postInvalidate()
         }
-        mAnimator.duration = 11000
+        mAnimator.duration = 3500
+        mAnimator.startDelay=-1500
         mAnimator.repeatCount = ValueAnimator.INFINITE
         mAnimator.start()
     }
@@ -83,7 +83,8 @@ class WaveView2(context: Context?, attrs: AttributeSet?):
                     startX + itemWidth / 2 + offset,  //控制点的X,（起始点X + itemWidth/2 + offset)
                     getWaveHeigh(i).toFloat(),  //控制点的Y
                     startX + itemWidth + offset,  //结束点的X
-                    baseLine.toFloat() //结束点的Y
+                    baseLine //结束点的Y
+                        .toFloat()
                 ) //只需要处理完半个波长，剩下的有for循环自已就添加了。
             }
             //下面这三句话很重要，它是形成了一封闭区间，让曲线以下的面积填充一种颜色，大家可以把这3句话注释了看看效果。
@@ -99,4 +100,5 @@ class WaveView2(context: Context?, attrs: AttributeSet?):
             baseLine + waveHeight
         } else baseLine - waveHeight
     }
+
 }

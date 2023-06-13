@@ -19,6 +19,27 @@
         <item name="android:windowExitAnimation">@anim/dialog_exit_animation</item>
     </style>
 
+    <style name="MyDialogStyle" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:windowAnimationStyle">@style/Base.Animation.AppCompat.Dialog</item>
+        <!--<item name="android:windowFrame">@null</item>-->
+        <!--是否浮在窗口之上-->
+        <item name="android:windowIsFloating">true</item>
+
+        <!--dialog之外没有焦点的区域是否罩上黑色半透明-->
+        <item name="android:backgroundDimEnabled">true</item>
+
+        <item name="android:background">@drawable/info_dialog_bg</item>
+        <item name="android:textSize">20sp</item>
+
+    </style>
+
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/white</item>  //默认颜色
+        <item name="colorControlActivated">@color/white</item>  //输入时颜色
+    </style>
+
+
     <style name="Theme.TeamUp.Fullscreen" parent="Theme.TeamUp">
         <item name="android:actionBarStyle">@style/Widget.Theme.TeamUp.ActionBar.Fullscreen</item>
         <item name="android:windowActionBarOverlay">true</item>
@@ -26,10 +47,10 @@
     </style>
 
 
-<!--    <style name="ThemeOverlay.TeamUp.FullscreenContainer"  parent="Theme.AppCompat.Light.NoActionBar">-->
-<!--        <item name="fullscreenBackgroundColor">@color/light_blue_900</item>-->
-<!--        <item name="fullscreenTextColor">@color/light_blue_A400</item>-->
-<!--    </style>-->
+    <!--    <style name="ThemeOverlay.TeamUp.FullscreenContainer"  parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--        <item name="fullscreenBackgroundColor">@color/light_blue_900</item>-->
+    <!--        <item name="fullscreenTextColor">@color/light_blue_A400</item>-->
+    <!--    </style>-->
 
     <style name="Widget.Theme.TeamUp.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>

@@ -46,17 +46,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide() // 隐藏顶部栏
-        val BMOB_APPLICATION_ID = "8c5d3063d4274ca12e441a23f1a5261d"
-        Bmob.initialize(this, BMOB_APPLICATION_ID)
-        // 参数传递 sharedPreferences
-//        val intent = Intent()
-//        intent.putExtra("id",UserID)
+
+        // 读取内存
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString("id",UserID)
-        Toast.makeText(this, "From MainActivity: UserID = ${UserID}", Toast.LENGTH_SHORT).show()
-        editor.apply()
+        UserID = sharedPreferences.getString("id","-1") ?: "-1"
 
 //       btnNewActivity 新建 添加监听事件
         val btnCreateTeam = findViewById<FloatingActionButton>(R.id.btnCreateTeam)
@@ -70,7 +64,6 @@ class MainActivity : AppCompatActivity() {
                     override fun onAnimationEnd(animation: Animator) {
                         needShrinkAnimation = true
                         val CreateTeamIntent = Intent(this@MainActivity,CreateTeamActivity::class.java)
-                        intent.putExtra("id",UserID)
                         startActivity(CreateTeamIntent)
                     }
                 })
@@ -159,8 +152,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if(isFirstLoading) {
             isFirstLoading = false
-//            Toast.makeText(this,"11222",Toast.LENGTH_LONG).show()
-            overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
         }else{
             overridePendingTransition(0,0)
         }

@@ -3,27 +3,21 @@ package com.example.teamup
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.os.Handler
-import android.telecom.Call.Details
 import android.util.Log
-import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.*
-import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import cn.bmob.v3.Bmob
-import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
-import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.SaveListener
+import cn.bmob.v3.listener.UpdateListener
 import com.example.teamup.DataClass.TeamInfo
 import com.example.teamup.DataClass.User
 import java.text.SimpleDateFormat
@@ -54,39 +48,70 @@ class CreateTeamActivity : AppCompatActivity() {
         maxMemberView = findViewById(R.id.num_of_attendees)
         DetailsView = findViewById(R.id.create_team_info)
         startAnim()
-        //
+        // 读取内存
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
+        var UserID = sharedPreferences.getString("id","-1") ?: "-1"  // 当前登录用户 的 ObjectID
 
-        val UserID = intent.getStringExtra("id")     // 当前登录用户 的 ObjectID
 //        点击确定按钮的监听事件
         findViewById<Button>(R.id.create_team_confirm).setOnClickListener {
-//          1. 添加队伍信息
+            var teamName = TeamNameView.text.toString()
+            var teamDetail = DetailsView.text.toString()
+            var teamDeadLine = DeadLineView.text.toString()
+            var teamMaxMember = maxMemberView.text.toString()
+//          1. 检查是否有 空表单
+            if(teamName == "" || teamDetail == "" ||
+                teamDeadLine == "" || teamMaxMember == "" ) {
+                Toast.makeText(this,"请填写完整信息",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+//          2. 添加队伍信息
             val team = TeamInfo(
                 UserID,
-                TeamNameView.text.toString(),
-                DetailsView.text.toString(),
-                DeadLineView.text.toString(),
-                maxMemberView.text.toString().toInt() ,
-                1,
+                teamName,
+                teamDetail,
+                teamDeadLine,
+                teamMaxMember.toInt(),
                 arrayOf()
             )
             team.save(object : SaveListener<String>() {
-                override fun done(objectId: String?, e: BmobException?) {
+                override fun done(newTeamID: String?, e: BmobException?) {
                     if (e == null) {
-                        Toast.makeText(
-                            this@CreateTeamActivity,
-                            "创建团队成功，返回objectId为：" + objectId,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        if (newTeamID != null) {
+//          3. 更新UserID对应的信息，增加领导队伍
+                            var user = User()
+                            user.objectId = UserID
+                            user.add("leadTeam", newTeamID)
+                            user.leadTeam?.distinct() // 去重
+                            user.update(object : UpdateListener() {
+                                override fun done(e: BmobException?) {
+                                    if (e == null) { // 更新成功
+                                        Toast.makeText(
+                                            this@CreateTeamActivity,
+                                            "创建团队成功，返回objectId为：" + newTeamID,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else { // 更新失败
+                                        Toast.makeText(
+                                            this@CreateTeamActivity,
+                                            "创建团队成功，leadTeam 数组添加失败",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            })
+                        }
+
                     } else {
                         Toast.makeText(
                             this@CreateTeamActivity,
                             "创建团队失败：" + e.message,
                             Toast.LENGTH_SHORT
                         ).show()
+                        Log.e("MyError",e.message?:"")
                     }
                 }
             })
-//          2. 更新UserID对应的信息，增加领导队伍
             exitAnim()
             Handler().postDelayed({
                 DialogUnLogin().show(supportFragmentManager,"DialogFragment")
@@ -105,36 +130,46 @@ class CreateTeamActivity : AppCompatActivity() {
             }, 800)
         }
 
-//      点击 截止日期 文本，显示 日期时间选择 的对话框
+// 点击截止日期文本时显示日期时间选择器
         val dateEditText = findViewById<EditText>(R.id.deadline)
         dateEditText.setOnClickListener {
             val calendar: Calendar = Calendar.getInstance()
             val year: Int = calendar.get(Calendar.YEAR)
             val month: Int = calendar.get(Calendar.MONTH)
             val dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
-            val hourOfDay: Int = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute: Int = calendar.get(Calendar.MINUTE)
+
+            // 创建日期选择器
             val datePickerDialog = DatePickerDialog(
                 this@CreateTeamActivity,
                 { view, year, month, dayOfMonth -> // 在此处处理选定的日期
                     calendar.set(Calendar.YEAR, year)
                     calendar.set(Calendar.MONTH, month)
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                }, year, month, dayOfMonth
-            )
-            val timePickerDialog = TimePickerDialog(
-                this@CreateTeamActivity,
-                { view, hourOfDay, minute -> // 在此处处理选定的时间
-                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    calendar.set(Calendar.MINUTE, minute)
 
-                    // 将日期和时间格式化为字符串并设置到 EditText 中
-                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
-                    val dateTimeString: String = sdf.format(calendar.getTime())
-                    dateEditText.setText(dateTimeString)
-                }, hourOfDay, minute, true
+                    // 创建时间选择器
+                    val hourOfDay: Int = calendar.get(Calendar.HOUR_OF_DAY)
+                    val minute: Int = calendar.get(Calendar.MINUTE)
+                    val timePickerDialog = TimePickerDialog(
+                        this@CreateTeamActivity,
+                        { view, hourOfDay, minute -> // 在此处处理选定的时间
+                            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                            calendar.set(Calendar.MINUTE, minute)
+
+                            // 将日期和时间格式化为字符串并设置到 EditText 中
+                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+                            val dateTimeString: String = sdf.format(calendar.getTime())
+                            dateEditText.setText(dateTimeString)
+                        },
+                        hourOfDay,
+                        minute,
+                        true
+                    )
+                    timePickerDialog.show()
+                },
+                year,
+                month,
+                dayOfMonth
             )
-            timePickerDialog.show()
             datePickerDialog.show()
         }
     }

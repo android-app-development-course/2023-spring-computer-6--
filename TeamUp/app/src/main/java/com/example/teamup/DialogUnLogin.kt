@@ -1,4 +1,4 @@
-package com.example.teamup.DataClass
+package com.example.teamup
 
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
@@ -8,9 +8,6 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AlertDialog
-import com.example.teamup.LoginActivity
-import com.example.teamup.MainActivity
-import com.example.teamup.R
 
 class DialogUnLogin : DialogFragment() {
 

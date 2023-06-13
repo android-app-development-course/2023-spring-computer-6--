@@ -12,4 +12,5 @@ class User(
     var resume:String? =null,
     var joinTeam:Array<String>? =null, // 作为队员的 TeamInfo.ObjectID
     var leadTeam:Array<String>? =null // 作为队长的 TeamInfo.ObjectID
-):BmobObject()
+):BmobObject() {
+}

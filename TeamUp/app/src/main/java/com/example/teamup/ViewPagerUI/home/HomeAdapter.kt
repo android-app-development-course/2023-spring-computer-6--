@@ -1,6 +1,7 @@
 package com.example.teamup.ViewPagerUI.home
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,15 +9,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.QueryListener
+import cn.bmob.v3.listener.UpdateListener
 import com.example.teamup.DataClass.TeamInfo
 import com.example.teamup.DataClass.User
+import com.example.teamup.MainActivity
 import com.example.teamup.R
 
-class HomeAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(
+    private val itemList: List<TeamInfo>,
+    private val UserID: String,
+    private val activity: Activity,
+    private val fragment: HomeFragment
+    ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_team, parent, false)
@@ -42,6 +52,9 @@ class HomeAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<H
 
         init {  // 点击 RecyclerView 中按钮后 显示对话框
             itemView.setOnClickListener {  // 获取item的数据
+                if(UserID == "-1") {// 如果没有登录，则不显示对话框
+                    return@setOnClickListener
+                }
                 val item = itemList[adapterPosition]
 
                 // 打开对话框
@@ -57,16 +70,39 @@ class HomeAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<H
                 // 加入按钮 监听事件
                 val btnJoinTeam = view.findViewById<Button>(R.id.btnJoinTeam)
                 btnJoinTeam.setOnClickListener {
-                    Log.d("myDebug","加入按钮 监听事件")
-                }
-                // 调整 Dialog 宽高
-                val params = dialog.window?.attributes
-                val width = params?.width ?: 0
-                val height = params?.height ?: 0
-                view.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
-                view.layout(0, 0, width , height)
+                    Log.d("MyDebug","加入按钮 监听事件")
+//                  1. User.joinTeam 更新
+                    var user = User()
+                    user.objectId = UserID
+                    user.add("joinTeam", item.objectId)
+                    user.joinTeam?.distinct()
+                    user.update(object : UpdateListener() {
+                        override fun done(e: BmobException?) {
+                            if (e == null) { // 更新成功
+//                  2. TeamInfo.members 更新
+                                var team = TeamInfo()
+                                team.objectId = item.objectId
+                                team.add("members", UserID)
+                                team.members?.distinct()
+                                team.update(object : UpdateListener(){
+                                    override fun done(e: BmobException?) {
+                                        if(e == null){
+                                            fragment.refresh() // 刷新页面
+                                            Toast.makeText(activity,"加入成功",Toast.LENGTH_SHORT).show()
+                                            dialog.dismiss()// 关闭对话框
+                                        }else{
+                                            Log.e("ErrorTAG", e.toString())
+                                        }
+                                    }
 
+                                })
+
+                            } else { // 更新失败
+                                Log.e("ErrorTAG", e.toString())
+                            }
+                        }
+                    })
+                }
                 dialog.show()
             }
         }
@@ -81,7 +117,7 @@ class HomeAdapter(private val itemList: List<TeamInfo>) : RecyclerView.Adapter<H
                     if (e == null && UserItem != null) {
                         titleView.text = item.competitionName
                         dateView.text = item.deadline
-                        attendeeView.text = item.curNum.toString() + '/' + item.expectedNum.toString()
+                        attendeeView.text = "${item.curNum()}/${item.expectedNum}"
                         leaderNameView.text = UserItem.userName
                         leaderSchoolView.text = UserItem.university
                         leaderMajorView.text = UserItem.major

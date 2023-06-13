@@ -12,6 +12,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.QueryListener
 import com.example.teamup.DataClass.User
 import com.example.teamup.R
+import java.lang.reflect.Member
 
 class DialogMemberAdapter(private val itemList: Array<String>) : RecyclerView.Adapter<DialogMemberAdapter.ViewHolder>() {
 
@@ -29,7 +30,6 @@ class DialogMemberAdapter(private val itemList: Array<String>) : RecyclerView.Ad
 
     override fun getItemCount(): Int = itemList.size
 
-
     @SuppressLint("InflateParams")
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemUserName = itemView.findViewById<TextView>(R.id.MemberName_Member)
@@ -39,10 +39,9 @@ class DialogMemberAdapter(private val itemList: Array<String>) : RecyclerView.Ad
         //        布局与数据的绑定，设置对应布局的文本
         @SuppressLint("SetTextI18n")
         fun bind(item: String) {
-
             // 查询数据库 获得 UserName
-            val LeaderDetailQuery = BmobQuery<User>()
-            LeaderDetailQuery.getObject(item, object : QueryListener<User>() {
+            val MemberDetailQuery = BmobQuery<User>()
+            MemberDetailQuery.getObject(item, object : QueryListener<User>() {
                 override fun done(UserItem: User?, e: BmobException?) {
                     if (e == null && UserItem != null) {
                         itemUserName.text = UserItem.userName// 设置 用户名

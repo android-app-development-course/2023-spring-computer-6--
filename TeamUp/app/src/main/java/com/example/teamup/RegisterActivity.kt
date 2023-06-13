@@ -8,19 +8,31 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+
+import cn.bmob.v3.Bmob
+import cn.bmob.v3.BmobACL
+import cn.bmob.v3.BmobObject
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
+import cn.bmob.v3.listener.QueryListener
+import cn.bmob.v3.listener.SaveListener
+import com.example.teamup.DataClass.User
 
 class RegisterActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
+
+    val BMOB_APPLICATION_ID = "8c5d3063d4274ca12e441a23f1a5261d"
+    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         supportActionBar?.hide() // 隐藏顶部栏
+
 
         var register_t= findViewById<TextView>(R.id.register_title)
         var face= Typeface.createFromAsset(assets,"Jackpot.ttf")
@@ -81,6 +93,87 @@ class RegisterActivity : AppCompatActivity() {
             onBackPressed()
             finish()
         }
+
+        Bmob.initialize(this, BMOB_APPLICATION_ID)
+        findViewById<Button>(R.id.register_bt).setOnClickListener {
+            val account_edit=findViewById<EditText>(R.id.account2)
+            val pwd_new_edit=findViewById<EditText>(R.id.code)
+            val pwd_conf_edit=findViewById<EditText>(R.id.code_again)
+
+            if( account_edit.text.toString()=="" || pwd_new_edit.text.toString()=="" || pwd_conf_edit.text.toString()=="" ){
+                Toast.makeText(this@RegisterActivity,"请输入完整信息", Toast.LENGTH_SHORT).show()
+
+            }
+            else{
+
+                if(  pwd_new_edit.text.toString()!= pwd_conf_edit.text.toString() ){
+                    Toast.makeText(this@RegisterActivity,"两次密码不一致", Toast.LENGTH_SHORT).show()
+
+                }
+                else{
+                    val query = BmobQuery<User>()
+
+                    // 添加查询条件
+                    query.addWhereEqualTo("account", account_edit.text.toString())
+
+                    // 执行查询，并在回调函数中处理查询结果
+                    query.findObjects(object : FindListener<User>() {
+                        override fun done(persons: MutableList<User>?, e: BmobException?) {
+                            if (e == null) {
+                                // 查询成功，处理查询结果
+                                if (persons != null && persons.size > 0) {
+                                    Toast.makeText(this@RegisterActivity,"该账号已经存在",Toast.LENGTH_SHORT).show()
+
+                                } else {
+                                    // 没有查询到符合条件的数据，可以注册
+
+                                    val temp_user=User(
+                                        account_edit.text.toString(),
+                                        account_edit.text.toString(),
+                                        pwd_conf_edit.text.toString(),
+                                        "无",
+                                        "无",
+                                        "无",
+                                        "无",
+                                        arrayOf(),
+                                        arrayOf())
+
+
+                                    temp_user.save(object : SaveListener<String>() {
+                                        override fun done(objectId: String?, e: BmobException?) {
+                                            if (e == null) {
+                                                Toast.makeText(this@RegisterActivity,"添加数据成功，返回objectId为："+objectId,Toast.LENGTH_SHORT).show()
+                                                val intent1= Intent(this@RegisterActivity, MainActivity::class.java) //用于跳转
+                                                intent1.putExtra("id",objectId)
+
+                                                startActivity(intent1)
+                                                overridePendingTransition(R.anim.slide_f_b,R.anim.slide_t_t)
+
+
+                                            } else {
+                                                Toast.makeText(this@RegisterActivity,"注册用户失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
+
+                                            }
+                                        }
+                                    })
+
+                                }
+                            } else {
+                                Toast.makeText(this@RegisterActivity,"注册用户失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+                    })
+                }
+
+
+            }
+
+
+        }
+
+
+
     }
 
     override fun onBackPressed() {

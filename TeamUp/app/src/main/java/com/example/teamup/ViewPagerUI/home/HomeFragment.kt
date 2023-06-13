@@ -48,54 +48,72 @@ class HomeFragment : Fragment() {
 //  每次显示页面 刷新
     override fun onResume() {
         super.onResume()
+    // 读取内存
         val sharedPreferences: SharedPreferences =
             activity!!.getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
         var itUserID = sharedPreferences.getString("id","-1")
-        if((itUserID == UserID && UserID != "-1"))
-            return // 假设没有变化，则不会进行操作
-        UserID = itUserID ?: "-1"
-        var totalList = mutableListOf<String>()// 记录该用户已经加入和领导的 teamInfo.ObjectID
-        var itemList = mutableListOf<TeamInfo>()// 存储该用户已经加入和领导的 teamInfo 内容
 
-        // 查询数据 获得用户加入和领导 的队伍
+    if (itUserID != null) {
+        UserID = itUserID
+        if(itUserID != "-1")
+            refresh()
+        else
+            showAll()
+    }
+//
+//        if(itUserID == UserID)
+//            return // 当前用户 没有变化
+//        else if (itUserID != null && itUserID != "-1") {// 已登录
+//            UserID = itUserID
+//            refresh()
+//        } else{// 当前没有登录，则 显示所有队伍
+//            showAll()
+//        }
+    }
+
+    private fun showAll() {
+        val query = BmobQuery<TeamInfo>()
+        query.findObjects(object : FindListener<TeamInfo>() {
+            override fun done(teams: MutableList<TeamInfo>?, e: BmobException?) {
+                if (e == null && teams != null && teams.isNotEmpty()) { // 查询到了符合条件的数据
+                    // 绑定视图
+                    val adapter = HomeAdapter(teams, UserID, activity!!, this@HomeFragment)
+                    recView.adapter = adapter
+                    recView.layoutManager = LinearLayoutManager(activity) // 线性布局
+
+                } else { // 查询失败，处理异常
+                    Log.e("ErrorTAG", e.toString())
+                }
+            }
+        })
+    }
+
+    fun refresh(){
         if(UserID != "-1") {
-            val query = BmobQuery<User>()
-            query.getObject( UserID, object : QueryListener<User>() {
-                override fun done(person: User?, e: BmobException?) {
-                    if (e == null) { // 查询成功
-                        if (person != null) { // 查询到了符合条件的数据
-                            totalList.addAll(person.joinTeam?.toList()!!)
-                            totalList.addAll(person.leadTeam?.toList()!!)
-                        }
-                    } else { // 查询失败，处理异常
-                        Log.e("ErrorTAG", e.toString())
-                    }
-                }
-            })
-            val notInTotalListQuery = BmobQuery<TeamInfo>() // 查找不在totalList 数据库的 队伍
-            notInTotalListQuery.addWhereNotContainedIn("objectID", totalList)
-            notInTotalListQuery.findObjects(object : FindListener<TeamInfo>() {
+            val query = BmobQuery<TeamInfo>()
+            query.findObjects(object : FindListener<TeamInfo>() {
                 override fun done(teams: MutableList<TeamInfo>?, e: BmobException?) {
-                    if (e == null) { // 查询成功
-                        if (teams != null && teams.isNotEmpty()) { // 查询到了符合条件的数据
-                            itemList = teams
+                    if (e == null && teams != null && teams.isNotEmpty()) { // 查询到了符合条件的数据
+                        var itemList = mutableListOf<TeamInfo>()
+                        for (team in teams){
+//                            判断条件：如果 members不包含UserID 且 leader 不是 UserID 且 没有满足人数
+                            if(!team.isMember(UserID) && !team.isLeader(UserID) && !team.isFull()){
+                                itemList.add(team)
+                            }
                         }
+                        // 绑定视图
+                        val adapter = HomeAdapter(itemList, UserID, activity!!, this@HomeFragment)
+                        recView.adapter = adapter
+                        recView.layoutManager = LinearLayoutManager(activity) // 线性布局
+
                     } else { // 查询失败，处理异常
                         Log.e("ErrorTAG", e.toString())
                     }
                 }
             })
-        }
-    //        Log.d("totalListSize", totalList.size.toString())
-        Log.d("itemListSize", itemList.size.toString())
-//        Toast.makeText(activity, "itemList.size ${itemList.size}", Toast.LENGTH_SHORT).show()
-        // 绑定视图
-        if(itemList.isNotEmpty()) {
-            val adapter = HomeAdapter(itemList)
-            recView.adapter = adapter
-            recView.layoutManager = LinearLayoutManager(activity) // 线性布局
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
