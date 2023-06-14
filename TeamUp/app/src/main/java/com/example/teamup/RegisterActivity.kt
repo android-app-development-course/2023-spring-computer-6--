@@ -149,7 +149,7 @@ class RegisterActivity : AppCompatActivity() {
 
                                                 startActivity(intent1)
                                                 overridePendingTransition(R.anim.slide_f_b,R.anim.slide_t_t)
-
+                                                finish()
 
                                             } else {
                                                 Toast.makeText(this@RegisterActivity,"注册用户失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
