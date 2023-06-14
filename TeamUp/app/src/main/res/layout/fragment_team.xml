@@ -8,6 +8,7 @@
     android:layout_margin="2dp"
     tools:context=".ViewPagerUI.team.TeamFragment"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/searchLayout_team"
         android:layout_width="match_parent"
@@ -17,13 +18,13 @@
         android:paddingTop="4dp"
         >
 
-<!--        <Spinner-->
-<!--            android:id="@+id/searchSpinner_team"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:entries="@array/search_options"-->
-<!--            android:prompt="@string/search_prompt"-->
-<!--            android:layout_weight="1" />-->
+        <!--        <Spinner-->
+        <!--            android:id="@+id/searchSpinner_teamLeader"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:entries="@array/search_options"-->
+        <!--            android:prompt="@string/search_prompt"-->
+        <!--            android:layout_weight="1" />-->
 
         <EditText
             android:id="@+id/searchEditText_team"
@@ -52,11 +53,11 @@
         android:layout_height="40dp"
         app:tabGravity="fill"
         app:tabMode="fixed"/>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_team"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
 
 </LinearLayout>

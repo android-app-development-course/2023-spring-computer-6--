@@ -48,6 +48,7 @@ class CreateTeamActivity : AppCompatActivity() {
         maxMemberView = findViewById(R.id.num_of_attendees)
         DetailsView = findViewById(R.id.create_team_info)
         startAnim()
+
         // 读取内存
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
@@ -114,7 +115,6 @@ class CreateTeamActivity : AppCompatActivity() {
             })
             exitAnim()
             Handler().postDelayed({
-                DialogUnLogin().show(supportFragmentManager,"DialogFragment")
                 overridePendingTransition(0,0)// 取消系统动画
                 finish()
             }, 800) // 延迟 1 秒后执行跳转
@@ -124,7 +124,6 @@ class CreateTeamActivity : AppCompatActivity() {
         findViewById<Button>(R.id.create_team_cancel).setOnClickListener {
             exitAnim()
             Handler().postDelayed({
-                DialogUnLogin().show(supportFragmentManager,"DialogFragment")
                 overridePendingTransition(0,0)// 取消系统动画
                 finish()
             }, 800)

@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -19,28 +21,73 @@ import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.UpdateListener
 import com.example.teamup.DataClass.TeamInfo
 import com.example.teamup.DataClass.User
+import com.example.teamup.DialogUnLogin
 import com.example.teamup.MainActivity
 import com.example.teamup.R
 
 class HomeAdapter(
-    private val itemList: List<TeamInfo>,
+    private val itemList: List<TeamInfo>,//存放原数据
     private val UserID: String,
     private val activity: Activity,
     private val fragment: HomeFragment
     ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
-
+    private fun isNotLogin() = UserID == "-1"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_team, parent, false)
         return ViewHolder(view)
     }
 
-//    设置 RecyclerView 中每个位置的视图的数据。
+//    设置 RecyclerView 中每个位置的视图的数据
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = itemList[position]
-        holder.bind(item)
+        holder.bind(itemList[position])
     }
 
     override fun getItemCount(): Int = itemList.size
+////   实现过滤功能
+//    override fun getFilter() = object : Filter() {
+//
+//        override fun performFiltering(constraint: CharSequence?): FilterResults {
+//            val filterResults = FilterResults()
+//            if (constraint.isNullOrEmpty()) {
+//                Log.d("MyDebug_HomeAdapter","搜索栏为空")
+//                v = data
+//                filterResults.values = data
+//            } else {
+//                query(constraint)
+//                filterResults.values = mFilterList
+//            }
+//            return filterResults
+//        }
+//
+//        private fun query(constraint: CharSequence) {
+//            mFilterList = mutableListOf()
+//            for(team in data){
+//                // 暂时只搜索 团队名称
+//                if(team.competitionName?.contains(constraint)==true)
+//                    mFilterList.add(team)
+//                else {
+////                    val LeaderDetailQuery = BmobQuery<User>()
+////                    LeaderDetailQuery.getObject(team.leader, object : QueryListener<User>() {
+////                        override fun done(leader: User?, e: BmobException?) {
+////                            if (e == null && leader != null) {
+////                                if (leader.userName?.contains(constraint) == true
+////                                    || leader.university?.contains(constraint) == true
+////                                    || leader.major?.contains(constraint) == true
+////                                )
+////                                    mFilterList.add(team)
+////                            }
+////                        }
+////                    })
+//                }
+//            }
+//        }
+//
+//        @SuppressLint("NotifyDataSetChanged")
+//        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+//            mFilterList = (results?.values as MutableList<TeamInfo>) ?: mutableListOf<TeamInfo>()
+//            notifyDataSetChanged()
+//        }
+//    }
 
     @SuppressLint("InflateParams")
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -65,7 +112,8 @@ class HomeAdapter(
 
             // 点击 RecyclerView 中按钮后 显示对话框
             itemView.setOnClickListener {  // 获取item的数据
-                if(UserID == "-1") {// 如果没有登录，则不显示对话框
+                if(isNotLogin()) {// 如果没有登录，则显示 提示登录的对话框
+                    DialogUnLogin(activity).show()
                     return@setOnClickListener
                 }
                 val item = itemList[adapterPosition]
@@ -135,6 +183,7 @@ class HomeAdapter(
             LeaderDetailQuery.getObject( item.leader, object : QueryListener<User>() {
                 override fun done(UserItem: User?, e: BmobException?) {
                     if (e == null && UserItem != null) {
+
                         titleView.text = item.competitionName
                         dateView.text = item.deadline
                         attendeeView.text = "${item.curNum()} / ${item.expectedNum}"
@@ -144,7 +193,6 @@ class HomeAdapter(
                     }
                 }
             })
-
         }
-    }
+    } // inner Class
 }
