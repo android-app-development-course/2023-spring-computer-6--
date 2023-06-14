@@ -81,6 +81,9 @@
             android:gravity="center_vertical"
             android:clickable="true"
             android:focusable="true"
+
+            android:ellipsize="end"
+            android:singleLine="true"
             />
 
 
@@ -119,6 +122,8 @@
             android:textSize="28sp"
 
             android:layout_marginTop="33dp"
+            android:ellipsize="end"
+            android:singleLine="true"
 
             />
 
@@ -172,6 +177,8 @@
             android:text=""
             android:textSize="28sp"
             android:layout_marginTop="30dp"
+            android:ellipsize="end"
+            android:singleLine="true"
 
             />
 
@@ -225,6 +232,8 @@
             android:textSize="28sp"
             android:layout_marginTop="30dp"
 
+            android:ellipsize="end"
+            android:singleLine="true"
             />
 
         <View
@@ -279,6 +288,8 @@
             android:textSize="28sp"
             android:layout_marginTop="30dp"
 
+            android:ellipsize="end"
+            android:singleLine="true"
             />
 
         <View
