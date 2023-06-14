@@ -88,7 +88,7 @@ class CreateTeamActivity : AppCompatActivity() {
                                     if (e == null) { // 更新成功
                                         Toast.makeText(
                                             this@CreateTeamActivity,
-                                            "创建团队成功，返回objectId为：" + newTeamID,
+                                            "创建团队成功",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     } else { // 更新失败

@@ -4,6 +4,7 @@ package com.example.teamup.ViewPagerUI.team
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,17 @@ class TeamMemberAdapter(
         private val leaderSchoolView: TextView = itemView.findViewById(R.id.LeaderUniversity)
         private val leaderMajorView: TextView = itemView.findViewById(R.id.LeaderMajor)
         init {
+            var face= Typeface.createFromAsset(itemView.context.assets,"Jackpot.ttf")
+            var face_cn= Typeface.createFromAsset(itemView.context.assets,"MaoKenShiJinHei-2.ttf")
+            itemView.findViewById<TextView>(R.id.team_deadline).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.team_attendees).setTypeface(face)
+            itemView.findViewById<TextView>(R.id.CompetitionName).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderName).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderMajor).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderUniversity).setTypeface(face_cn)
+
+
+
             // 点击 RecyclerView.item 中的按钮后 显示对话框
             itemView.setOnClickListener {
                 // 获取item的数据
@@ -78,8 +90,10 @@ class TeamMemberAdapter(
             dialog.setContentView(view)
 
             // 设置对话框标题
+            var face= Typeface.createFromAsset(activity?.assets  ,"MaoKenShiJinHei-2.ttf")
             val dialogTitle = view.findViewById<TextView>(R.id.team_member_title)
             dialogTitle.text = team.competitionName
+            dialogTitle.setTypeface(face)
 
             // 设置简介内容
             val dialogMembers = view.findViewById<RecyclerView>(R.id.team_member_recyview)
@@ -88,6 +102,7 @@ class TeamMemberAdapter(
 
             // 退出团队 按钮监听事件
             val btnExitTeam = view.findViewById<Button>(R.id.btnExitTeam)
+            btnExitTeam.setTypeface(face)
             btnExitTeam.setOnClickListener {
                 Log.d("myDebug","点击退出团队按钮")
                 updateData(team)
@@ -169,7 +184,7 @@ class TeamMemberAdapter(
                                 if (e == null && UserItem != null) {
                                     titleView.text = item.competitionName
                                     dateView.text = item.deadline
-                                    attendeeView.text = "${item.curNum()}/${item.expectedNum}"
+                                    attendeeView.text = "${item.curNum()} / ${item.expectedNum}"
                                     leaderNameView.text = UserItem.userName// 设置 用户名
                                     leaderSchoolView.text = UserItem.university// 设置 学校
                                     leaderMajorView.text = UserItem.major// 设置 专业

@@ -3,6 +3,7 @@ package com.example.teamup.ViewPagerUI.home
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +51,19 @@ class HomeAdapter(
         private val leaderSchoolView: TextView = itemView.findViewById(R.id.LeaderUniversity)
         private val leaderMajorView: TextView = itemView.findViewById(R.id.LeaderMajor)
 
-        init {  // 点击 RecyclerView 中按钮后 显示对话框
+        init {
+
+            var face= Typeface.createFromAsset(itemView.context.assets,"Jackpot.ttf")
+            var face_cn= Typeface.createFromAsset(itemView.context.assets,"MaoKenShiJinHei-2.ttf")
+            itemView.findViewById<TextView>(R.id.team_deadline).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.team_attendees).setTypeface(face)
+            itemView.findViewById<TextView>(R.id.CompetitionName).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderName).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderMajor).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderUniversity).setTypeface(face_cn)
+
+
+            // 点击 RecyclerView 中按钮后 显示对话框
             itemView.setOnClickListener {  // 获取item的数据
                 if(UserID == "-1") {// 如果没有登录，则不显示对话框
                     return@setOnClickListener
@@ -62,6 +75,13 @@ class HomeAdapter(
                 val view = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_join_team, null)
                 dialog.window?.setLayout(1200, 800) // 设置宽1200dp 高800dp
                 dialog.setContentView(view)
+
+                var face= Typeface.createFromAsset(activity?.assets  ,"MaoKenShiJinHei-2.ttf")
+                view.findViewById<TextView>(R.id.join_team_title).setTypeface(face)
+                view.findViewById<TextView>(R.id.join_team_jianjie).setTypeface(face)
+                view.findViewById<TextView>(R.id.join_team_info).setTypeface(face)
+                view.findViewById<TextView>(R.id.btnJoinTeam).setTypeface(face)
+
 
                 // 设置对话框标题
                 view.findViewById<TextView>(R.id.join_team_title).text = item.competitionName
@@ -117,7 +137,7 @@ class HomeAdapter(
                     if (e == null && UserItem != null) {
                         titleView.text = item.competitionName
                         dateView.text = item.deadline
-                        attendeeView.text = "${item.curNum()}/${item.expectedNum}"
+                        attendeeView.text = "${item.curNum()} / ${item.expectedNum}"
                         leaderNameView.text = UserItem.userName
                         leaderSchoolView.text = UserItem.university
                         leaderMajorView.text = UserItem.major

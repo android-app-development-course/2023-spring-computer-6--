@@ -2,6 +2,7 @@ package com.example.teamup.ViewPagerUI.team
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -46,9 +47,18 @@ class DialogLeaderAdapter(
         val itemMajor = itemView.findViewById<TextView>(R.id.MemberMajor_Leader)
         val btnKickOut = itemView.findViewById<Button>(R.id.btnKickOut)
 
+        var face= Typeface.createFromAsset(itemView.context.assets,"Jackpot.ttf")
+        var face_cn= Typeface.createFromAsset(itemView.context.assets,"MaoKenShiJinHei-2.ttf")
+
         //        布局与数据的绑定，设置对应布局的文本
         @SuppressLint("SetTextI18n")
         fun bind(userId: String) {
+            itemUserName.setTypeface(face_cn)
+            itemUniversity.setTypeface(face_cn)
+            itemMajor.setTypeface(face_cn)
+            btnKickOut.setTypeface(face_cn)
+
+
             // 查询数据库 获得 UserName
             val LeaderDetailQuery = BmobQuery<User>()
             LeaderDetailQuery.getObject(userId, object : QueryListener<User>() {

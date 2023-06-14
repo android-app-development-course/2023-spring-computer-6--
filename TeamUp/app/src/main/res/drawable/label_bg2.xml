@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <!-- 阴影 -->
+    <item
+        android:bottom="0dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:top="0dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/>
+            <stroke
+                android:width="5dp"
+                android:color="#FFFFFF"
+                android:dashWidth="10dp"
+                android:dashGap="2dp"/>
+
+            <corners android:radius="0dp" />
+        </shape>
+    </item>
+    <!-- 实心内容 bottom、left、right、top的距离就是阴影显示的范围，0就是没有阴影显示的范围-->
+
+    <item android:state_pressed="false"
+        android:top="0dp"
+        android:bottom="2dp"
+        android:left="0dp"
+        android:right="0dp"
+        >
+        <shape android:shape="rectangle">
+            <corners android:radius="0dp" />
+            <solid android:color="@color/blue"/>
+        </shape>
+    </item>
+
+
+
+</layer-list>

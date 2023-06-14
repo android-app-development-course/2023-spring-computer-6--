@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.ClipData.Item
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,16 @@ class TeamLeaderAdapter(
         private val leaderMajorView: TextView = itemView.findViewById(R.id.LeaderMajor)
 
         init {
+            var face= Typeface.createFromAsset(itemView.context.assets,"Jackpot.ttf")
+            var face_cn= Typeface.createFromAsset(itemView.context.assets,"MaoKenShiJinHei-2.ttf")
+            itemView.findViewById<TextView>(R.id.team_deadline).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.team_attendees).setTypeface(face)
+            itemView.findViewById<TextView>(R.id.CompetitionName).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderName).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderMajor).setTypeface(face_cn)
+            itemView.findViewById<TextView>(R.id.LeaderUniversity).setTypeface(face_cn)
+
+
             // 点击 RecyclerView.item 中的按钮后 显示对话框
             itemView.setOnClickListener {
                 // 获取item的数据
@@ -76,8 +87,10 @@ class TeamLeaderAdapter(
             dialog.setContentView(view)
 
             // 设置对话框标题
+            var face= Typeface.createFromAsset(activity?.assets  ,"MaoKenShiJinHei-2.ttf")
             val dialogTitle = view.findViewById<TextView>(R.id.leader_team_title)
             dialogTitle.text = item.competitionName
+            dialogTitle.setTypeface(face)
 
             // 设置队员列表
             // 查询数据库，获得成员信息
@@ -107,7 +120,7 @@ class TeamLeaderAdapter(
                                 if (e == null && UserItem != null) {
                                     titleView.text = item.competitionName
                                     dateView.text = item.deadline
-                                    attendeeView.text = "${item.curNum()}/${item.expectedNum}"
+                                    attendeeView.text = "${item.curNum()} / ${item.expectedNum}"
                                     leaderNameView.text = UserItem.userName// 设置 用户名
                                     leaderSchoolView.text = UserItem.university// 设置 学校
                                     leaderMajorView.text = UserItem.major// 设置 专业

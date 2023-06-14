@@ -1,5 +1,6 @@
 package com.example.teamup
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
@@ -30,6 +32,13 @@ class LoginActivity : AppCompatActivity() {
 
     val BMOB_APPLICATION_ID = "8c5d3063d4274ca12e441a23f1a5261d"
 
+    /** 上次点击返回键的时间  */
+    private var lastBackPressed: Long = 0
+
+    /** 两次点击的间隔时间  */
+    private val QUIT_INTERVAL = 3000
+
+    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -166,65 +175,72 @@ class LoginActivity : AppCompatActivity() {
             val accountEditText = findViewById<EditText>(R.id.account)
             val passwordEditText = findViewById<EditText>(R.id.password)
 
+            if (accountEditText.text.toString()=="" || passwordEditText.text.toString()=="" ){
+                Toast.makeText(this@LoginActivity,"请输入完整信息",Toast.LENGTH_SHORT).show()
 
+            }
+            else{
+                val query = BmobQuery<User>()
+                // 添加查询条件
+                query.addWhereEqualTo("account", accountEditText.text.toString())
+                // 执行查询，并在回调函数中处理查询结果
+                query.findObjects(object : FindListener<User>() {
+                    override fun done(persons: MutableList<User>?, e: BmobException?) {
+                        if (e == null) {
+                            // 查询成功，处理查询结果
+                            if (persons != null && persons.size > 0) {
 
-            val query = BmobQuery<User>()
-            // 添加查询条件
-            query.addWhereEqualTo("account", accountEditText.text.toString())
-            // 执行查询，并在回调函数中处理查询结果
-            query.findObjects(object : FindListener<User>() {
-                override fun done(persons: MutableList<User>?, e: BmobException?) {
-                    if (e == null) {
-                        // 查询成功，处理查询结果
-                        if (persons != null && persons.size > 0) {
+                                val query1 = BmobQuery<User>()
+                                // 添加查询条件
+                                query1.addWhereEqualTo("account", accountEditText.text.toString())
+                                query1.addWhereEqualTo("password", passwordEditText.text.toString())
+                                // 执行查询，并在回调函数中处理查询结果
+                                query1.findObjects(object : FindListener<User>() {
+                                    override fun done(persons1: MutableList<User>?, e: BmobException?) {
+                                        if (e == null) {
+                                            // 查询成功，处理查询结果
+                                            if (persons1 != null && persons1.size == 1) {
+                                                val intent = Intent(this@LoginActivity,MainActivity::class.java)
+                                                intent.putExtra("id",persons1[0].objectId)
+                                                Toast.makeText(this@LoginActivity,"登录成功",Toast.LENGTH_SHORT).show()
 
-                            val query1 = BmobQuery<User>()
-                            // 添加查询条件
-                            query1.addWhereEqualTo("account", accountEditText.text.toString())
-                            query1.addWhereEqualTo("password", passwordEditText.text.toString())
-                            // 执行查询，并在回调函数中处理查询结果
-                            query1.findObjects(object : FindListener<User>() {
-                                override fun done(persons1: MutableList<User>?, e: BmobException?) {
-                                    if (e == null) {
-                                        // 查询成功，处理查询结果
-                                        if (persons1 != null && persons1.size == 1) {
-                                            val intent = Intent(this@LoginActivity,MainActivity::class.java)
-                                            intent.putExtra("id",persons1[0].objectId)
-                                            Toast.makeText(this@LoginActivity,"登录成功",Toast.LENGTH_SHORT).show()
+                                                val sharedPreferences: SharedPreferences =
+                                                    getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
+                                                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                                                editor.putString("id",persons1[0].objectId)
+                                                editor.apply()
 
-                                            val sharedPreferences: SharedPreferences =
-                                                getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
-                                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                                            editor.putString("id",persons1[0].objectId)
-                                            editor.apply()
+                                                startActivity(intent)
+                                                overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
+                                                finish()
 
-                                            startActivity(intent)
-                                            overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)
-                                            finish()
-
+                                            } else {
+                                                // 没有查询到符合条件的数据，可以注册
+                                                Toast.makeText(this@LoginActivity,"密码错误",Toast.LENGTH_SHORT).show()
+                                            }
                                         } else {
-                                            // 没有查询到符合条件的数据，可以注册
-                                            Toast.makeText(this@LoginActivity,"密码错误",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this@LoginActivity,"登录失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
+
                                         }
-                                    } else {
-                                        Toast.makeText(this@LoginActivity,"登录失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
-
                                     }
-                                }
-                            })
+                                })
 
 
 
+                            } else {
+                                // 没有查询到符合条件的数据，可以注册
+                                Toast.makeText(this@LoginActivity,"该用户不存在",Toast.LENGTH_SHORT).show()
+                            }
                         } else {
-                            // 没有查询到符合条件的数据，可以注册
-                            Toast.makeText(this@LoginActivity,"该用户不存在",Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this@LoginActivity,"登录失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity,"登录失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()
 
+                        }
                     }
-                }
-            })
+                })
+            }
+
+
+
 
 
 
@@ -261,5 +277,21 @@ class LoginActivity : AppCompatActivity() {
 //    override fun onBackPressed() {
 //        // Do nothing
 //    }
+
+    //重写onKeyDown()
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() === 0) {
+            val backPressed = System.currentTimeMillis()
+            if (backPressed - lastBackPressed > QUIT_INTERVAL) {
+                lastBackPressed = backPressed
+                Toast.makeText(this, "再按一次退出TeamUp", Toast.LENGTH_LONG).show()
+            } else {
+                finish()
+                System.exit(0)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
 }

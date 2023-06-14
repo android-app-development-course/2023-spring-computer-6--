@@ -142,7 +142,8 @@ class RegisterActivity : AppCompatActivity() {
                                     temp_user.save(object : SaveListener<String>() {
                                         override fun done(objectId: String?, e: BmobException?) {
                                             if (e == null) {
-                                                Toast.makeText(this@RegisterActivity,"添加数据成功，返回objectId为："+objectId,Toast.LENGTH_SHORT).show()
+                                                //Toast.makeText(this@RegisterActivity,"添加数据成功，返回objectId为："+objectId,Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(this@RegisterActivity,"注册成功",Toast.LENGTH_SHORT).show()
                                                 val intent1= Intent(this@RegisterActivity, MainActivity::class.java) //用于跳转
                                                 intent1.putExtra("id",objectId)
 
