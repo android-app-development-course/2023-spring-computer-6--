@@ -233,14 +233,15 @@ class LoginActivity : AppCompatActivity() {
 
 //        预览按钮
         findViewById<TextView>(R.id.preview).setOnClickListener{
-            val intent= Intent(this,MainActivity::class.java) //用于跳转
-            intent.putExtra("id","-1")
-
+//            写入共享内存
             val sharedPreferences: SharedPreferences =
                 getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
             editor.putString("id","-1")
             editor.apply()
+
+            val intent= Intent(this,MainActivity::class.java) //用于跳转
+            intent.putExtra("id","-1")
 
             startActivity(intent)
             overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out)

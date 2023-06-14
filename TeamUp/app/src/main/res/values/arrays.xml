@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="search_options">
-        <item>项目</item>
+        <item>团队</item>
         <item>学校</item>
         <item>专业</item>
     </string-array>

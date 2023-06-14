@@ -12,7 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.widget.Button
+import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,7 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import cn.bmob.v3.Bmob
 import com.example.teamup.ViewPagerUI.home.HomeFragment
 import com.example.teamup.ViewPagerUI.me.MeFragment
 import com.example.teamup.ViewPagerUI.team.TeamFragment
@@ -39,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     private var maxRadius = 200.0 // 圆形视图的最大半径
     private var needShrinkAnimation = false // 是否需要执行缩小动画的标志
     private var isFirstLoading = true
-//    private var isNavView: Boolean = true   // 是否为Nav底边栏
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +55,11 @@ class MainActivity : AppCompatActivity() {
 
 //       btnNewActivity 新建 添加监听事件
         val btnCreateTeam = findViewById<FloatingActionButton>(R.id.btnCreateTeam)
-        btnCreateTeam.setOnClickListener{view ->
+        btnCreateTeam.setOnClickListener{
 //            如果没有登录则打开登录提示
-            if(!isLogin())
-                DialogUnLogin().show(supportFragmentManager,"DialogFragment")
-            else {
+            if(!isLogin()) {
+                DialogUnLogin(this).show()
+            }else {
                 // 播放放大动画
                 fabScaleAnim(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
@@ -69,7 +70,6 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-
         viewPager = findViewById(R.id.viewPager)
         adapter = MyPagerAdapter(this)
         viewPager.adapter = adapter

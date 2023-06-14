@@ -4,16 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.teamup.R
 import com.example.teamup.databinding.FragmentTeamBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class TeamFragment : Fragment() {
 
+    private lateinit var searchView: EditText
+    private lateinit var btnSearch: ImageButton
     private var _binding: FragmentTeamBinding? = null
     private val binding get() = _binding!!
 
@@ -44,6 +49,10 @@ class TeamFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        searchView = view.findViewById(R.id.searchEditText_team)
+        btnSearch = view.findViewById(R.id.btnSearch_team)
+
         viewPager.adapter = pagerAdapter
 
 //        分页标题
@@ -70,8 +79,8 @@ class TeamFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> TeamLeaderFragment()
-                1 -> TeamMemberFragment()
+                0 -> TeamLeaderFragment(searchView,btnSearch)
+                1 -> TeamMemberFragment(searchView,btnSearch)
                 else -> throw IllegalArgumentException("Invalid position: $position")
             }
         }

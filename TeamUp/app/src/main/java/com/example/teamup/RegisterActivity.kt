@@ -2,6 +2,7 @@ package com.example.teamup
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -142,11 +143,19 @@ class RegisterActivity : AppCompatActivity() {
                                     temp_user.save(object : SaveListener<String>() {
                                         override fun done(objectId: String?, e: BmobException?) {
                                             if (e == null) {
+                                                //            写入共享内存
+                                                val sharedPreferences: SharedPreferences =
+                                                    getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
+                                                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                                                editor.putString("id",objectId)
+                                                editor.apply()
+
                                                 Toast.makeText(this@RegisterActivity,"添加数据成功，返回objectId为："+objectId,Toast.LENGTH_SHORT).show()
                                                 val intent1= Intent(this@RegisterActivity, MainActivity::class.java) //用于跳转
                                                 intent1.putExtra("id",objectId)
 
                                                 startActivity(intent1)
+                                                finish()
                                                 overridePendingTransition(R.anim.slide_f_b,R.anim.slide_t_t)
 
 
