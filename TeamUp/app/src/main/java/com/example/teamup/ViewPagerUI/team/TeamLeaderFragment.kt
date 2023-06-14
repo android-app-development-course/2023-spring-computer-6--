@@ -2,6 +2,7 @@ package com.example.teamup.ViewPagerUI.team
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,8 +21,10 @@ import cn.bmob.v3.listener.QueryListener
 import com.example.teamup.R
 import com.example.teamup.DataClass.TeamInfo
 import com.example.teamup.DataClass.User
+
 import com.example.teamup.DialogUnLogin
 import com.example.teamup.ViewPagerUI.home.HomeAdapter
+
 import com.google.android.gms.tasks.Continuation
 import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -35,8 +38,14 @@ class TeamLeaderFragment(
     private lateinit var recView: RecyclerView
     private var teamIdList = listOf<String>()
     private var UserID = "-1"
+
+
 //   应用布局
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+
+
+
         return inflater.inflate(R.layout.fragment_team_leader, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,6 +80,8 @@ class TeamLeaderFragment(
 
     override fun onResume() {
         super.onResume()
+
+
         // 读取内存
         val sharedPreferences: SharedPreferences =
             activity!!.getSharedPreferences("LoginUserInfo", Context.MODE_PRIVATE)

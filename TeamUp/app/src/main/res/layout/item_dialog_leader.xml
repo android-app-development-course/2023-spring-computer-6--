@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_margin="8dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
     app:cardCornerRadius="15dp"
     app:cardBackgroundColor="@color/blue_light"
     >
@@ -19,49 +19,87 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="8dp"
-            android:layout_weight="1">
+            android:layout_weight="3">
             <!--  成员名称 -->
             <TextView
                 android:id="@+id/MemberName_Leader"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Team Member"
+                android:text=""
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingStart="5dp"
+                android:letterSpacing="0.2"
+                android:textColor="#020202"
+
+                android:shadowColor="#DBF0FA"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="15"
+
+
+                />
 
             <!-- 成员学校 -->
             <TextView
                 android:id="@+id/MemberUniversity_Leader"
+
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:text="Member University"
+                android:layout_height="25dp"
+                android:text=""
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textSize="15sp"
-                android:layout_gravity="end|bottom" />
+                android:paddingStart="7dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="7dp"
+                android:layout_gravity="end|bottom"
+                android:background="@drawable/label_bg"
+                />
             <!-- 成员专业 -->
             <TextView
                 android:id="@+id/MemberMajor_Leader"
+
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:text="Member Major"
+                android:layout_height="25dp"
+                android:text=""
+                android:paddingStart="7dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textSize="15sp"
-                android:layout_gravity="end|bottom"/>
+                android:layout_gravity="end|bottom"
+                android:background="@drawable/label_bg"
+                />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="8dp">
-            <Button
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_weight="1.5"
+            >
+            <android.widget.Button
                 android:id="@+id/btnKickOut"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
                 android:text = "请出"
-                android:textColor = "@color/white"/>
+                android:textStyle="bold"
+                android:textColor = "@color/blue"
+                android:background="@drawable/info_dialog_bt"
+
+                />
         </LinearLayout>
     </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
@@ -30,6 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlin.math.hypot
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: MyPagerAdapter
@@ -41,6 +43,12 @@ class MainActivity : AppCompatActivity() {
     private var maxRadius = 200.0 // 圆形视图的最大半径
     private var needShrinkAnimation = false // 是否需要执行缩小动画的标志
     private var isFirstLoading = true
+
+    /** 上次点击返回键的时间  */
+    private var lastBackPressed: Long = 0
+
+    /** 两次点击的间隔时间  */
+    private val QUIT_INTERVAL = 3000
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -175,10 +183,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     private class MyPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
         private val fragments = listOf(TeamFragment(), HomeFragment(), MeFragment())
         override fun getItemCount(): Int = fragments.size
         override fun createFragment(position: Int): Fragment = fragments[position]
+    }
+
+
+
+
+
+    //重写onKeyDown()
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() === 0) {
+            val backPressed = System.currentTimeMillis()
+            if (backPressed - lastBackPressed > QUIT_INTERVAL) {
+                lastBackPressed = backPressed
+                Toast.makeText(this, "再按一次退出TeamUp", Toast.LENGTH_LONG).show()
+            } else {
+                finish()
+                System.exit(0)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
 

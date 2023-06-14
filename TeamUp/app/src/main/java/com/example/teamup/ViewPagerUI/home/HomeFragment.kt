@@ -92,6 +92,9 @@ class HomeFragment() : Fragment() {
 //  每次显示页面 刷新
     override fun onResume() {
         super.onResume()
+
+
+
     // 读取内存
         val sharedPreferences: SharedPreferences =
             activity!!.getSharedPreferences("LoginUserInfo", MODE_PRIVATE)

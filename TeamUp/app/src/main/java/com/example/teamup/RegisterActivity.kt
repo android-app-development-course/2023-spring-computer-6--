@@ -143,6 +143,7 @@ class RegisterActivity : AppCompatActivity() {
                                     temp_user.save(object : SaveListener<String>() {
                                         override fun done(objectId: String?, e: BmobException?) {
                                             if (e == null) {
+
                                                 //            写入共享内存
                                                 val sharedPreferences: SharedPreferences =
                                                     getSharedPreferences("LoginUserInfo", MODE_PRIVATE)
@@ -150,14 +151,15 @@ class RegisterActivity : AppCompatActivity() {
                                                 editor.putString("id",objectId)
                                                 editor.apply()
 
-                                                Toast.makeText(this@RegisterActivity,"添加数据成功，返回objectId为："+objectId,Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(this@RegisterActivity,"注册成功",Toast.LENGTH_SHORT).show()
+
                                                 val intent1= Intent(this@RegisterActivity, MainActivity::class.java) //用于跳转
                                                 intent1.putExtra("id",objectId)
 
                                                 startActivity(intent1)
                                                 finish()
                                                 overridePendingTransition(R.anim.slide_f_b,R.anim.slide_t_t)
-
+                                                finish()
 
                                             } else {
                                                 Toast.makeText(this@RegisterActivity,"注册用户失败,请确定是否联网：" + e.message,Toast.LENGTH_SHORT).show()

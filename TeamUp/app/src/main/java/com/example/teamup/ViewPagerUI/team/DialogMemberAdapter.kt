@@ -1,6 +1,7 @@
 package com.example.teamup.ViewPagerUI.team
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,9 +37,19 @@ class DialogMemberAdapter(private val itemList: Array<String>) : RecyclerView.Ad
         val itemUniversity = itemView.findViewById<TextView>(R.id.MemberUniversity_Member)
         val itemMajor = itemView.findViewById<TextView>(R.id.MemberMajor_Member)
 
+
+        var face= Typeface.createFromAsset(itemView.context.assets,"Jackpot.ttf")
+        var face_cn= Typeface.createFromAsset(itemView.context.assets,"MaoKenShiJinHei-2.ttf")
+
         //        布局与数据的绑定，设置对应布局的文本
         @SuppressLint("SetTextI18n")
+
         fun bind(item: String) {
+            itemUserName.setTypeface(face_cn)
+            itemUniversity.setTypeface(face_cn)
+            itemMajor.setTypeface(face_cn)
+
+
             // 查询数据库 获得 UserName
             val MemberDetailQuery = BmobQuery<User>()
             MemberDetailQuery.getObject(item, object : QueryListener<User>() {

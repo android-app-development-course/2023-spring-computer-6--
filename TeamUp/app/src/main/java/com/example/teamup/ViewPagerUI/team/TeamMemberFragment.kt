@@ -2,14 +2,19 @@ package com.example.teamup.ViewPagerUI.team
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+
+import android.widget.TextView
+
 import android.widget.EditText
 import android.widget.ImageButton
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.bmob.v3.BmobQuery
@@ -21,10 +26,16 @@ import com.example.teamup.DataClass.TeamInfo
 import com.example.teamup.DataClass.User
 import com.example.teamup.DialogUnLogin
 import com.example.teamup.LoginActivity
+
+import com.example.teamup.databinding.FragmentMeBinding
+import com.example.teamup.databinding.DialogTeamMemberBinding
+import kotlinx.coroutines.runBlocking
+
 import com.example.teamup.ViewPagerUI.home.HomeAdapter
 import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.CountDownLatch
+
 
 class TeamMemberFragment(
     private val searchView: EditText,
@@ -34,7 +45,10 @@ class TeamMemberFragment(
     private var teamIdList = listOf<String>()
     private var UserID = "-1"
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+
         return inflater.inflate(R.layout.fragment_team_member, container, false)
     }
 
@@ -70,6 +84,10 @@ class TeamMemberFragment(
     //  每次显示页面 判断是否需要刷新
     override fun onResume() {
         super.onResume()
+
+
+
+
         // 读取内存
         val sharedPreferences: SharedPreferences =
             activity!!.getSharedPreferences("LoginUserInfo", Context.MODE_PRIVATE)
